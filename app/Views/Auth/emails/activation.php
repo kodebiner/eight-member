@@ -27,7 +27,6 @@
                 width: 500px;
                 font-size: 10px;
                 line-height: 1.4;
-                color: #fff;
                 font-style: italic;
                 margin-bottom: 20px;
             }
