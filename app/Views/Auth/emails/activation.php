@@ -24,7 +24,7 @@
     }
 </style>
 <div class="body">
-    <div class="uk-container">
+    <div class="container">
         <div style="width:100%; text-align: center; margin: 20px 0;">
             <img src="<?=base_url()?>images/logo.png" width="80" height="80" />
         </div>
