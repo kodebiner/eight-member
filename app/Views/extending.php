@@ -1,0 +1,51 @@
+<?= $this->extend('layout') ?>
+
+<?= $this->section('pageStyles') ?>
+<link rel="stylesheet" href="css/jquery-ui.css">
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.webcam.js"></script>
+<script src="js/jquery-ui.js"></script>
+<?= $this->endSection() ?>
+
+<?= $this->section('main') ?>
+<?php if (!empty($user)) { ?>
+<div class="uk-flex uk-flex-middle" uk-height-viewport="offset-top: true; offset-bottom: .tm-footer;">
+    <div class="uk-width-1-1">
+        <div class="uk-h2 uk-text-center uk-margin-remove"><?=$user->firstname?> <?=$user->lastname?></div>
+        <div class="uk-margin">
+            <div class="uk-text-center">Expired At</div>
+            <?php
+            $ed = date('d-m-Y', strtotime($user->expired_at));
+            ?>
+            <div class="uk-h3 uk-margin-remove uk-text-center"><?=$ed?></div>
+        </div>
+        <form action="users/extending" method="post">
+            <input name="id" value="<?=$user->id?>" hidden/>
+            <div class="uk-flex uk-flex-center">
+                <div class="uk-inline">
+                    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+                    <input class="uk-input uk-form-width-medium" type="text" id="expire" name="expire" placeholder="<?=lang('Global.extendTo')?>" required/>
+                </div>
+            </div>
+            <div class="uk-margin uk-text-center">
+                <button class="uk-button uk-button-primary" type="submit"><?=lang('Global.extend')?></button>
+            </div>
+        </form>
+        <script type="application/javascript">
+            $( function() {
+                $( "#expire" ).datepicker({
+                    minDate: new Date(),
+                    dateFormat: "yy-mm-dd",
+                });
+            } );
+        </script>
+    </div>
+</div>
+<?php } else { ?>
+    <div class="uk-flex uk-flex-middle" uk-height-viewport="offset-top: true; offset-bottom: .tm-footer;">
+        <div class="uk-width-1-1">
+            <h1 class="uk-margin-remove uk-text-center uk-text-italic"><?=lang('Global.noData')?></h1>
+        </div>
+    </div>    
+<?php } ?>
+<?= $this->endSection() ?>

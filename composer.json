@@ -9,7 +9,10 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
+        "endroid/qr-code": "^4.8",
+        "gregwar/image": "2.*",
         "laminas/laminas-escaper": "^2.9",
+        "myth/auth": "^1.2",
         "psr/log": "^1.1"
     },
     "require-dev": {
