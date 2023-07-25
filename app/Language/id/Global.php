@@ -30,4 +30,10 @@ return [
     // Description
     'dashdesc'          => 'Informasi global mengenai bisnis anda',
     'myAccDesc'         => 'Informasi mengenai akun anda',
+
+    // Messages
+    'emailNotes'        => '* Email ini dikirim secara otomatis. Jangan membalas email ini.',
+    'activation1Msg'    => 'Ini adalah email aktivasi untuk akun anda di ',
+    'activation2Msg'    => 'Untuk mengaktifkan akun anda gunakan URL berikut.',
+    'activation3Msg'    => 'Bila anda tidak mendaftarkan di website ini, abaikan saja email ini.',
 ];

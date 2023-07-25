@@ -30,4 +30,10 @@ return [
     // Description
     'dashdesc'          => 'Global information about your business',
     'myAccDesc'         => 'Information about yout account',
+
+    // Messages
+    'emailNotes'        => '* This email sent automatically. Do not reply to this email.',
+    'activation1Msg'    => 'This is activation email for your account on ',
+    'activation2Msg'    => 'To activate your account use this URL.',
+    'activation3Msg'    => 'If you did not registered on this website, you can safely ignore this email.',
 ];

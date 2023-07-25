@@ -115,7 +115,7 @@ class Account extends BaseController
         $authorize->addUserToGroup($userId, $input['role']);
 
         // Redirecting
-        return redirect()->to('users')->with('message', 'New member has been created');
+        return redirect()->to('users/checkin?memberid='$newMember->memberid)->with('message', 'New member has been created');
     }
 
     public function list()
