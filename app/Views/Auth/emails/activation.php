@@ -5,7 +5,7 @@
         <style>
             body {
                 width: 100%;
-                background-color: #000;
+                background-color: #fff;
                 display: flex;
                 flex-wrap: nowrap;
                 justify-content: center;
@@ -20,7 +20,8 @@
                 border-radius: 20px;
                 padding: 20px;
                 width: 800px;
-                background-color: #fff;
+                background-color: #000;
+                color: #fff;
             }
             .notice {
                 width: 500px;
@@ -42,7 +43,7 @@
                 <?=lang('Global.activation2Msg')?><br/>
                 <a href="<?= url_to('activate-account') . '?token=' . $hash ?>"><?= url_to('activate-account') . '?token=' . $hash ?></a>
             </p>
-            <p style="margin-top: 40px;"><?=lang('Global.activation2Msg')?></p>
+            <p style="margin-top: 40px;"><?=lang('Global.activation3Msg')?></p>
         </div>
         <div class="notice"><?=lang('Global.emailNotes')?></div>
     </body>
