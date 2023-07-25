@@ -40,8 +40,13 @@ class Autoload extends AutoloadConfig
      * @phpstan-var array<string, string|list<string>>
      */
     public $psr4 = [
-        APP_NAMESPACE => APPPATH, // For custom app namespace
-        'Config'      => APPPATH . 'Config',
+        APP_NAMESPACE       => APPPATH, // For custom app namespace
+        'Config'            => APPPATH . 'Config',
+        'Myth\Auth'         => APPPATH . 'ThirdParty/myth',
+        'Endroid\QrCode'    => APPPATH . 'ThirdParty/endroid',
+        'Gregwar\Image'     => APPPATH . 'ThirdParty/gregwar',
+        'BaconQrCode'       => APPPATH . 'ThirdParty/bacon',
+        'DASPRiD\Enum'      => APPPATH . 'ThirdParty/dsprid',
     ];
 
     /**

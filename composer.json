@@ -5,7 +5,12 @@
     "homepage": "https://codeigniter.com",
     "license": "MIT",
     "require": {
-        "composer/composer"
+        "php": "^7.4 || ^8.0",
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "laminas/laminas-escaper": "^2.9",
+        "psr/log": "^1.1"
     },
     "require-dev": {
         "kint-php/kint": "^5.0.4",
