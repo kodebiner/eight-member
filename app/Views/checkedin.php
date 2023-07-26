@@ -12,7 +12,7 @@
         <script type="application/javascript">
             document.getElementById("success-message").addEventListener("load", loadWhatsapp);
             function loadWhatsapp() {
-                window.open('https://wa.me/<?=$user->phone?>?text='.$msg, '_blank');
+                window.open('https://wa.me/<?=$user->phone?>?text=<?=$msg?>', '_blank');
             }
         </script>
     <?php endif; ?>

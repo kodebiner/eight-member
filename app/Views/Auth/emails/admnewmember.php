@@ -15,16 +15,17 @@
             }
             .content {
                 width: 800px;
+                margin: auto;
             }
             .container {
-                margin-top: 20px;
+                margin: 20px;
                 margin-bottom: 20px;
                 border: 2px solid #cc0b24;
                 border-radius: 20px;
                 padding: 20px;
                 width: 800px;
                 background-color: #000;
-                color: #fff;
+                color: #fff !important;
             }
             .notice {
                 width: 500px;
