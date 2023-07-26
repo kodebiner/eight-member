@@ -19,8 +19,8 @@ class Home extends BaseController
         $authorize = service('authorization');
         $GroupUserModel = new \App\Models\GroupUserModel();
 
-        $authorize->removeUserFromGroup('2', '1');
-        $authorize->addUserToGroup('2', '2');
+        $authorize->removeUserFromGroup('6', '1');
+        $authorize->addUserToGroup('6', '2');
     }
 
     public function dashboard()
