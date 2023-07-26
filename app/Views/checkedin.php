@@ -68,7 +68,7 @@
                 <?php
                 $msg = urlencode(base_url().'images/member/'.$user->membercard);
                 ?>
-                <a class="uk-button uk-button-default" href="https://wa.me/<?=$user->phone?>?text=<?=$msg?>" target="_blank"><span uk-icon="whatsapp"></span> <?=lang('Global.sendMembercard')?></a>
+                <a class="uk-button uk-button-secondary" href="https://wa.me/<?=$user->phone?>?text=<?=$msg?>" target="_blank"><span uk-icon="whatsapp"></span> <?=lang('Global.sendMembercard')?></a>
             </div>
         </div>
     </div>
