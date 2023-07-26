@@ -13,6 +13,9 @@
             p {
                 font-size: 18px;
             }
+            .content {
+                width: 800px;
+            }
             .container {
                 margin-top: 20px;
                 margin-bottom: 20px;
@@ -33,22 +36,24 @@
         </style>
     </head>
     <body>
-        <div class="container">
-            <div style="width:100%; text-align: center; margin: 20px 0;">
-                <img src="<?=base_url()?>images/logo.png" width="80" height="80" />
+        <div class="content">
+            <div class="container">
+                <div style="width:100%; text-align: center; margin: 20px 0;">
+                    <img src="<?=base_url()?>images/logo.png" width="80" height="80" />
+                </div>
+                <p><?=lang('Global.activation1Msg')?> <b>Eight Gym</b>.</p>
+                <p><?=lang('Global.newMember1Msg')?> <b><?=$username?></b></p>
+                <p>
+                    <?=lang('Global.activation2Msg')?><br/>
+                    <a href="<?= url_to('reset-password') . '?token=' . $hash ?>"><?= url_to('reset-password') . '?token=' . $hash ?></a>
+                </p>
+                <p>
+                    <?=lang('Global.newMember2Msg')?><br/>
+                    <a href="<?=url_to('login')?>"><?=url_to('login')?></a>
+                </p>
+                <p style="margin-top: 40px;"><?=lang('Global.activation3Msg')?></p>
             </div>
-            <p><?=lang('Global.activation1Msg')?> <b>Eight Gym</b>.</p>
-            <p><?=lang('Global.newMember1Msg')?> <b><?=$username?></b></p>
-            <p>
-                <?=lang('Global.activation2Msg')?><br/>
-                <a href="<?= url_to('reset-password') . '?token=' . $hash ?>"><?= url_to('reset-password') . '?token=' . $hash ?></a>
-            </p>
-            <p>
-                <?=lang('Global.newMember2Msg')?><br/>
-                <a href="<?=url_to('login')?>"><?=url_to('login')?></a>
-            </p>
-            <p style="margin-top: 40px;"><?=lang('Global.activation3Msg')?></p>
+            <div class="notice"><?=lang('Global.emailNotes')?></div>
         </div>
-        <div class="notice"><?=lang('Global.emailNotes')?></div>
     </body>
 </html>
