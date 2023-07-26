@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Pesan Konfirmasi</title>
+        <title><?=lang('Auth.activationSubject')?></title>
         <style>
             body {
                 width: 100%;
@@ -18,14 +18,14 @@
                 margin: auto;
             }
             .container {
-                margin: 20px;
+                margin-top: 20px;
                 margin-bottom: 20px;
                 border: 2px solid #cc0b24;
                 border-radius: 20px;
                 padding: 20px;
                 width: 800px;
                 background-color: #000;
-                color: #fff !important;
+                color: #fff;
             }
             .notice {
                 width: 500px;
