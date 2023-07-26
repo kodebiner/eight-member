@@ -1,6 +1,18 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('main') ?>
 <?php if (!empty($user)) { ?>
+    <?php if (session()->has('newmember')) : ?>
+        <div class="uk-alert-success uk-margin" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <?= session('newmember') ?>
+        </div>
+        <?php
+        $msg = urlencode(base_url().'images/member/'.$user->membercard);
+        ?>
+        <script type="application/javascript">
+            window.open('https://wa.me/<?=$user->phone?>?text='.$msg, '_blank');
+        </script>
+    <?php endif; ?>
     <div class="uk-margin uk-child-width-1-2@m uk-grid-divider" uk-grid>
         <div class="uk-form uk-form-horizontal">
             <div class="uk-margin">

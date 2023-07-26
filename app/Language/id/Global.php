@@ -37,4 +37,6 @@ return [
     'activation1Msg'    => 'Ini adalah email aktivasi untuk akun anda di ',
     'activation2Msg'    => 'Untuk mengaktifkan akun anda gunakan URL berikut.',
     'activation3Msg'    => 'Bila anda tidak mendaftarkan di website ini, abaikan saja email ini.',
+    'newMember1Msg'     => 'Username anda adalah',
+    'newMember2Msg'     => 'Anda bisa masuk ke akun anda dengan URL berikut.',
 ];

@@ -104,6 +104,7 @@ class Account extends BaseController
 
         $newMember->activate();
         $newMember->setForcePassReset(1);
+        $newMember->generateResetHash();
 
         // Saving New User Data
         $UserModel->insert($newMember);
@@ -114,8 +115,15 @@ class Account extends BaseController
         // Asign New User to a Group
         $authorize->addUserToGroup($userId, $input['role']);
 
+        // Sending Email
+        $email = \Config\Services::email();
+        $email->setTo($newMember->email);
+        $email->setSubject(lang('Auth.activationSubject'));
+        $email->setMessage(view('Auth/emails/admnewmember', ['hash' => $newMember->reset_hash, 'username' => $newMember->username]));
+        $email->send();
+
         // Redirecting
-        return redirect()->to('users/checkin?memberid='.$newMember->memberid)->with('message', 'New member has been created');
+        return redirect()->to('users/checkin?memberid='.$newMember->memberid)->with('newmember', 'New member has been created');
     }
 
     public function list()
