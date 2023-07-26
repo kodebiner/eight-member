@@ -52,8 +52,8 @@
                     <?=lang('Global.newMember2Msg')?><br/>
                     <a href="<?=url_to('login')?>"><?=url_to('login')?></a>
                 </p>
-                <p><?=lang('Global.newMember2Msg')?></p>
-                <img src="<?=$cid?>" style="width:100%;" />
+                <p><?=lang('Global.newMember3Msg')?></p>
+                <img src="cid:<?=$cid?>" style="width:100%;" />
                 <p style="margin-top: 40px;"><?=lang('Global.activation3Msg')?></p>
             </div>
             <div class="notice"><?=lang('Global.emailNotes')?></div>

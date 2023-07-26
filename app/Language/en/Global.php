@@ -19,6 +19,7 @@ return [
     'noData'            => 'Data Not Found',
     'extend'            => 'Extend',
     'extendTo'          => 'Extend to',
+    'sendMembercard'    => 'Send Membercard',
 
     // Button
     'manage'            => 'Manage',

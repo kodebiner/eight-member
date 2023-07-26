@@ -1,20 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('main') ?>
 <?php if (!empty($user)) { ?>
-    <?php if (session()->has('newmember')) : ?>
-        <div class="uk-alert-success uk-margin" uk-alert onload="loadWhatsapp()">
-            <a class="uk-alert-close" uk-close></a>
-            <?= session('newmember') ?>
-        </div>
-        <?php
-        $msg = urlencode(base_url().'images/member/'.$user->membercard);
-        ?>
-        <script type="application/javascript">
-            function loadWhatsapp() {
-                window.open('https://wa.me/<?=$user->phone?>?text=<?=$msg?>', '_blank');
-            }
-        </script>
-    <?php endif; ?>
     <div class="uk-margin uk-child-width-1-2@m uk-grid-divider" uk-grid>
         <div class="uk-form uk-form-horizontal">
             <div class="uk-margin">
@@ -75,7 +61,15 @@
             </div>
         </div>
         <div>
-            <img class="uk-width-1-1" src="images/member/<?=$user->photo?>" />
+            <div class="uk-margin">
+                <img class="uk-width-1-1" src="images/member/<?=$user->photo?>" />
+            </div>
+            <div class="uk-margin uk-text-center">
+                <?php
+                $msg = urlencode(base_url().'images/member/'.$user->membercard);
+                ?>
+                <a class="uk-button uk-button-default" href="https://wa.me/<?=$user->phone?>?text=<?=$msg?>" target="_blank"><span uk-icon="whatsapp"></span> <?=lang('Global.sendMembercard')?></a>
+            </div>
         </div>
     </div>
     <?php

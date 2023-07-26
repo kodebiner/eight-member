@@ -19,6 +19,7 @@ return [
     'noData'            => 'Data Tidak Ditemukan',
     'extend'            => 'Perpanjangan',
     'extendTo'          => 'Perpanjangan hingga',
+    'sendMembercard'    => 'Kirim Kartu Member',
 
     // Button
     'manage'            => 'Kelola',
