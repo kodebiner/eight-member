@@ -2,7 +2,7 @@
 <?= $this->section('main') ?>
 <?php if (!empty($user)) { ?>
     <?php if (session()->has('newmember')) : ?>
-        <div id="success-message" class="uk-alert-success uk-margin" uk-alert>
+        <div class="uk-alert-success uk-margin" uk-alert onload="loadWhatsapp()">
             <a class="uk-alert-close" uk-close></a>
             <?= session('newmember') ?>
         </div>
@@ -10,7 +10,6 @@
         $msg = urlencode(base_url().'images/member/'.$user->membercard);
         ?>
         <script type="application/javascript">
-            document.getElementById("success-message").addEventListener("load", loadWhatsapp);
             function loadWhatsapp() {
                 window.open('https://wa.me/<?=$user->phone?>?text=<?=$msg?>', '_blank');
             }

@@ -39,4 +39,5 @@ return [
     'activation3Msg'    => 'If you did not registered on this website, you can safely ignore this email.',
     'newMember1Msg'     => 'Your Username is',
     'newMember2Msg'     => 'You can login to yout accunt with this URL.',
+    'newMember3Msg'     => "We've attach your membercard in this email. You can download it to checkin.",
 ];

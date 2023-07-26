@@ -39,4 +39,5 @@ return [
     'activation3Msg'    => 'Bila anda tidak mendaftarkan di website ini, abaikan saja email ini.',
     'newMember1Msg'     => 'Username anda adalah',
     'newMember2Msg'     => 'Anda bisa masuk ke akun anda dengan URL berikut.',
+    'newMember3Msg'     => "Kami telah menyertakan membercard anda di attechment email ini. Anda dapat mengunduhnya untuk checkin.",
 ];

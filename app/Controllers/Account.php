@@ -117,9 +117,11 @@ class Account extends BaseController
 
         // Sending Email
         $email = \Config\Services::email();
+        $email->attach(FCPATH.'/images/member/'.$fileName);
+        $cid = $email->setAttachmentCID(FCPATH.'/images/member/'.$fileName);
         $email->setTo($newMember->email);
         $email->setSubject(lang('Auth.activationSubject'));
-        $email->setMessage(view('Auth/emails/admnewmember', ['hash' => $newMember->reset_hash, 'username' => $newMember->username]));
+        $email->setMessage(view('Auth/emails/admnewmember', ['hash' => $newMember->reset_hash, 'username' => $newMember->username, 'cid' => $cid]));
         $email->send();
 
         // Redirecting
