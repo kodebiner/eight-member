@@ -18,6 +18,38 @@ class Account extends BaseController
         return view('myaccount', $data);
     }
 
+    public function updateaccount()
+    {
+        // Calling Models & Entities
+        $UserModel = new UserModel();
+        $account = new \App\Entities\User();
+
+        // Populating Data
+        $input = $this->request->getPost();
+
+        // Validating Data
+        $rules = [
+            'username'      => 'required|alpha_numeric_space|min_length[3]|max_length[30]',
+            'email'         => 'required|valid_email',
+            'firstname'     => 'required',
+            'lastname'      => 'required'
+        ];
+        if (! $this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        // Saving Data
+        $account->id        = $this->data['uid'];
+        $account->username  = $input['username'];
+        $account->firstname = $input['firstname'];
+        $account->lastname  = $input['lastname'];
+        $account->email     = $input['email'];
+        $UserModel->save($account);
+
+        // Redirecting
+        return redirect()->back()->with('message', 'data has been saved');
+    }
+
     public function newmember()
     {
         // Calling Model
@@ -59,8 +91,8 @@ class Account extends BaseController
 
         // Validating Input Data
         $rules = [
-            'firstname'     => 'required|alpha_numeric_punct',
-            'lastname'      => 'required|alpha_numeric_punct',
+            'firstname'     => 'required',
+            'lastname'      => 'required',
             'email'         => 'required|valid_email|is_unique[users.email]',
             'country-code'  => 'required',
             'phone'         => 'required|numeric',
@@ -130,29 +162,72 @@ class Account extends BaseController
 
     public function list()
     {
+        // Calling Services
+        $pager = \Config\Services::pager();
+
         // Calling Models
         $UserModel          = new UserModel();
         $GroupUserModel     = new GroupUserModel();
         $GroupModel         = new GroupModel();
 
         // Populating Data
-        $input = $this->request->getGet('role');
+        $input = $this->request->getGet();
+
+        $builder = $UserModel->builder();
         
-        if (isset($input)) {
+        if (isset($input['sort'])) {
+            $sort = $input['sort'];
+        } else {
+            $sort = 10;
+        }
+
+        if ((isset($input['role'])) && ($input['role'] != '0') && (empty($input['search']))) {
             $userids = array();
-            $GroupUser = $GroupUserModel->where('group_id', $input)->find();
+            $GroupUser = $GroupUserModel->where('group_id', $input['role'])->find();
             foreach ($GroupUser as $GroupUser) {
                 $userids[] = $GroupUser['user_id'];
             }
-            $users = $UserModel->whereIn('id', $userids)->find();
+            $users = $UserModel->whereIn('id', $userids)->paginate($sort, 'users');
+        } elseif ((isset($input['role'])) && ($input['role'] != '0') && (isset($input['search']) && !empty($input['search']))) {
+            $userids = array();
+            $GroupUser = $GroupUserModel->where('group_id', $input['role'])->find();
+            foreach ($GroupUser as $GroupUser) {
+                $userids[] = $GroupUser['user_id'];
+            }
+            $searchArr = [
+                'firstname'     => $input['search'],
+                'lastname'      => $input['search'],
+                'username'      => $input['search']
+            ];
+            $users = $UserModel->whereIn('id', $userids)->where('firstname', $input['search'])->orWhere('lastname', $input['search'])->orWhere('username', $input['search'])->paginate($sort, 'users');
+        } elseif (((empty($input['role'])) || ($input['role'] === '0')) && (isset($input['search']) && !empty($input['search']))) {
+            $searchArr = [
+                'firstname'     => $input['search'],
+                'lastname'      => $input['search'],
+                'username'      => $input['search']
+            ];
+            $users = $UserModel->where('firstname', $input['search'])->orWhere('lastname', $input['search'])->orWhere('username', $input['search'])->paginate($sort, 'users');
         } else {
-            $users = $UserModel->findAll();
+            $users = $UserModel->paginate($sort, 'users');
+        }
+
+        if (isset($input['role'])) {
+            $dispInput = $input;
+        } else {
+            $dispInput = [
+                'role'      => '',
+                'search'    => '',
+                'sort'      => ''
+            ];
         }
 
         $data                   = $this->data;
         $data['title']          = lang('Global.myAccount');
         $data['description']    = lang('Global.myAccDesc');
         $data['users']          = $users;
+        $data['groups']         = $GroupModel->findAll();
+        $data['pager']          = $UserModel->pager;
+        $data['input']          = $dispInput;
 
         return view('userlist', $data);
     }

@@ -9,8 +9,7 @@ return [
     'memberid'          => 'Member ID',
     'registerdate'      => 'Registered Since',
     'updatedate'        => 'Updated At',
-    'expiredate'        => 'Expired At',
-    'logout'            => 'Logout',
+    'expiredate'        => 'Subscribed Until',
     'profile'           => 'Profile',
     'account'           => 'Account',
     'subscription'      => 'Subscription',
@@ -20,17 +19,40 @@ return [
     'extend'            => 'Extend',
     'extendTo'          => 'Extend to',
     'sendMembercard'    => 'Send Membercard',
+    'noPhoto'           => 'No photo found',
+    'imgClick'          => 'Click/Tap image to download',
+    'allRole'           => 'all role',
+    'search'            => 'search',
+    'display'           => 'Display',
+    'perPage'           => 'per Page',
+    'areYouSure'        => 'Are you sure?',
 
     // Button
     'manage'            => 'Manage',
+    'logout'            => 'Logout',
+    'save'              => 'Save',
+    'passChange'        => 'Change Password',
+    'edit'              => 'Edit',
+    'delete'            => 'Delete',
 
     // Title
     'dashboard'         => 'Dashboard',
     'myAccount'         => 'My Account',
+    'Users'             => 'Users',
+    'newMember'         => 'New Member',
+    'memberList'        => 'Member List',
+    'checkIn'           => 'Check-In',
+    'extend'            => 'Extend',
+    'updateMember'      => 'Update Member',
 
     // Description
     'dashdesc'          => 'Global information about your business',
     'myAccDesc'         => 'Information about yout account',
+    'newMemberDesc'     => 'Form to add new member',
+    'memberListDesc'    => 'List of all registered member',
+    'checkInDesc'       => 'Checking a member in',
+    'extendDesc'        => 'Exten the member subscription',
+    'updateMemberDesc'  => 'Form to update member information',
 
     // Messages
     'emailNotes'        => '* This email sent automatically. Do not reply to this email.',

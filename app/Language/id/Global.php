@@ -9,8 +9,7 @@ return [
     'memberid'          => 'ID Member',
     'registerdate'      => 'Terdaftar Sejak',
     'updatedate'        => 'Diperbarui Pada',
-    'expiredate'        => 'Berlaku Hingga',
-    'logout'            => 'Keluar',
+    'expiredate'        => 'Berlangganan Hingga',
     'profile'           => 'Profil',
     'account'           => 'Akun',
     'subscription'      => 'Langganan',
@@ -20,17 +19,40 @@ return [
     'extend'            => 'Perpanjangan',
     'extendTo'          => 'Perpanjangan hingga',
     'sendMembercard'    => 'Kirim Kartu Member',
+    'noPhoto'           => 'Foto tidak ditemukan',
+    'imgClick'          => 'Klik/Ketuk gambar untuk mengunduh',
+    'allRole'           => 'semua peran',
+    'search'            => 'Cari',
+    'display'           => 'Tampilkan',
+    'perPage'           => 'per Halaman',
+    'areYouSure'        => 'Anda sudah yahin?',
 
     // Button
     'manage'            => 'Kelola',
+    'logout'            => 'Keluar',
+    'save'              => 'Simpan',
+    'passChange'        => 'Change Password',
+    'edit'              => 'Ubah',
+    'delete'            => 'Hapus',
 
     // Title
     'dashboard'         => 'Dasbor',
     'myAccount'         => 'Akun Saya',
+    'Users'             => 'Pengguna',
+    'newMember'         => 'Member Baru',
+    'memberList'        => 'Daftar Member',
+    'checkIn'           => 'Check-In',
+    'extend'            => 'Perpanjangan',
+    'updateMember'      => 'Perbarui Member',
 
     // Description
     'dashdesc'          => 'Informasi global mengenai bisnis anda',
     'myAccDesc'         => 'Informasi mengenai akun anda',
+    'newMemberDesc'     => 'Formulir untuk menambahkan member baru',
+    'memberListDesc'    => 'Daftar member yang sudah terdaftar',
+    'checkInDesc'       => 'Check-in member',
+    'extendDesc'        => 'Perpanjangan berlangganan member',
+    'updateMemberDesc'  => 'Formulir untuk memperbarui informasi member',
 
     // Messages
     'emailNotes'        => '* Email ini dikirim secara otomatis. Jangan membalas email ini.',

@@ -294,7 +294,7 @@ class Auth extends BaseController
     {
         $data                   = $this->data;
         $data['config']         = $this->config;
-        $data['title']          = lang('Global.forgotPassword');
+        $data['title']          = lang('Auth.forgotPassword');
         $data['description']    = '';
 
         if ($this->config->activeResetter === null) {

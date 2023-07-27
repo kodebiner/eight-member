@@ -61,9 +61,15 @@
             </div>
         </div>
         <div>
+            <?php if (isset($user->photo)) { ?>
             <div class="uk-margin">
                 <img class="uk-width-1-1" src="images/member/<?=$user->photo?>" />
             </div>
+            <?php } else { ?>
+            <div clss="uk-margin">
+                <div class="uk-text-center uk-text-meta"><?=lang('Global.noPhoto')?></div>
+            </div>
+            <?php } ?>
             <div class="uk-margin uk-text-center">
                 <?php
                 $msg = urlencode(base_url().'images/member/'.$user->membercard);

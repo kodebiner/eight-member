@@ -4,47 +4,133 @@
 <div class="uk-flex uk-flex-right">
     <a class="uk-button uk-button-primary" href="users/newmember">+ Add Member</a>
 </div>
-<table class="uk-table uk-table-hover uk-table-striped uk-table-divider uk-table-middle">
-    <thead>
-        <tr>
-            <th>Memberid</th>
-            <th><?=lang('Global.fullname')?></th>
-            <th><?=lang('Global.phone')?></th>
-            <th><?=lang('Auth.email')?></th>
-            <th class="uk-text-center"><?=lang('Global.subscription')?></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($users as $user) { ?>
+<?php if ($ismobile === false) { ?>
+<form class="uk-margin" action="users" method="GET">
+    <div class="uk-margin uk-flex-between uk-child-width-auto" uk-grid>
+        <div>
+            <div class="uk-vhild-width-auto uk-grid-small" uk-grid>
+                <div>
+                    <select class="uk-select uk-form-width-small" id="role" name="role">
+                        <option value='0' <?=(empty($input['role'])) ? 'selected' : ''?><?=($input['role'] === '0') ? 'selected' : ''?>><?=lang('Global.allRole')?></option>
+                        <?php foreach ($groups as $group) { ?>
+                            <option value="<?=$group->id?>" <?=($input['role'] === $group->id) ? 'selected' : ''?>><?=$group->name?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="uk-inline">
+                    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: search"></span>
+                    <input class="uk-input uk-form-width-medium" type="text" id="search" name="search" placeholder="<?=lang('Global.search')?>" value="<?=(isset($input['search'])) ? $input['search'] : ''?>" />
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="uk-child-width-auto uk-grid-small uk-flex-middle" uk-grid>
+                <div><?=lang('Global.display')?>:</div>
+                <div>
+                    <select class="uk-select uk-form-width-xsmall" id="sort" name="sort">
+                        <option value="10" <?=(($input['sort'] === '10') || (empty($input['sort']))) ? 'selected' : ''?>>10</option>
+                        <option value="25" <?=($input['sort'] === '25') ? 'selected' : ''?>>25</option>
+                        <option value="100" <?=($input['sort'] === '100') ? 'selected' : ''?>>100</option>
+                    </select>
+                </div>
+                <div><?=lang('Global.perPage')?></div>
+            </div>
+        </div>
+    </div>
+    <button id="submit" type="submit" hidden></button>
+</form>
+<?php } else { ?>
+<form class="uk-margin" action="users" method="GET">
+    <div class="uk-margin uk-child-width-1-2 uk-grid-small" uk-grid>
+        <div>
+            <select class="uk-select" id="role" name="role">
+                <option value='0' <?=(empty($input['role'])) ? 'selected' : ''?><?=($input['role'] === '0') ? 'selected' : ''?>><?=lang('Global.allRole')?></option>
+                <?php foreach ($groups as $group) { ?>
+                    <option value="<?=$group->id?>" <?=($input['role'] === $group->id) ? 'selected' : ''?>><?=$group->name?></option>
+                <?php } ?>
+            </select>
+        </div>
+        <div class="uk-inline">
+            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: search"></span>
+            <input class="uk-input" type="text" id="search" name="search" placeholder="<?=lang('Global.search')?>" value="<?=(isset($input['search'])) ? $input['search'] : ''?>" />
+        </div>
+    </div>
+    <div class="uk-margin uk-flex uk-flex-right">
+        <div class="uk-child-width-auto uk-grid-small uk-flex-middle" uk-grid>
+            <div><?=lang('Global.display')?>:</div>
+            <div>
+                <select class="uk-select uk-form-width-xsmall" id="sort" name="sort">
+                    <option value="10" <?=(($input['sort'] === '10') || (empty($input['sort']))) ? 'selected' : ''?>>10</option>
+                    <option value="25" <?=($input['sort'] === '25') ? 'selected' : ''?>>25</option>
+                    <option value="100" <?=($input['sort'] === '100') ? 'selected' : ''?>>100</option>
+                </select>
+            </div>
+            <div><?=lang('Global.perPage')?></div>
+        </div>
+    </div>
+    <button id="submit" type="submit" hidden></button>
+</form>
+<?php } ?>
+<script type="application/javascript">
+    document.getElementById('role').addEventListener('change', formSubmit);
+    document.getElementById('search').addEventListener('change', formSubmit);
+    document.getElementById('sort').addEventListener('change', formSubmit);
+    function formSubmit() {
+        document.getElementById("submit").click();
+    }
+</script>
+<div class="uk-overflow-auto">
+    <table class="uk-table uk-table-hover uk-table-striped uk-table-divider uk-table-middle">
+        <thead>
             <tr>
-                <td><?=$user->memberid?></td>
-                <td><?=$user->firstname?> <?=$user->lastname?></td>
-                <td><?=$user->phone?></td>
-                <td><?=$user->email?></td>
-                <?php
-                $today = date('Y-m-d');
-                $expire = date('Y-m-d', strtotime($user->expired_at));
-                if ($user->expired_at != null) {
-                    $expired = $expire;
-                    if ($expire < $today) {
-                        $style = 'style="background-color:#cc0b24; color:#fff;"';
-                    } else {
-                        $style = 'style="background-color:#04bf04; color:#fff;"';
-                    }
-                } else {
-                    $style = 'style="background-color:#cc0b24;"';
-                    $expired = '<span class="uk-text-meta uk-text-italic" style="color:#fff;">'.lang('Global.notSubscribed').'</span>';
-                }
-                ?>
-                <td class="uk-text-center" <?=$style?>><?=$expired?></td>
-                <td class="uk-text-center">
-                    <button class="uk-button uk-button-secondary" type="button" uk-toggle="target: #user-<?=$user->memberid?>"><?=lang('Global.manage')?></button>
-                </td>
+                <th>Memberid</th>
+                <th><?=lang('Global.fullname')?></th>
+                <th><?=lang('Global.phone')?></th>
+                <th><?=lang('Auth.email')?></th>
+                <th class="uk-text-center"><?=lang('Global.subscription')?></th>
+                <th></th>
             </tr>
-        <?php } ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php
+            if (!empty($users)) {
+                foreach ($users as $user) {
+            ?>
+                <tr>
+                    <td><?=$user->memberid?></td>
+                    <td><?=$user->firstname?> <?=$user->lastname?></td>
+                    <td><?=$user->phone?></td>
+                    <td><?=$user->email?></td>
+                    <?php
+                    $today = date('Y-m-d');
+                    $expire = date('Y-m-d', strtotime($user->expired_at));
+                    if ($user->expired_at != null) {
+                        $expired = $expire;
+                        if ($expire < $today) {
+                            $style = 'style="background-color:#cc0b24; color:#fff;"';
+                        } else {
+                            $style = 'style="background-color:#04bf04; color:#fff;"';
+                        }
+                    } else {
+                        $style = 'style="background-color:#cc0b24;"';
+                        $expired = '<span class="uk-text-meta uk-text-italic" style="color:#fff;">'.lang('Global.notSubscribed').'</span>';
+                    }
+                    ?>
+                    <td class="uk-text-center" <?=$style?>><?=$expired?></td>
+                    <td class="uk-text-center">
+                        <button class="uk-button uk-button-secondary" type="button" uk-toggle="target: #user-<?=$user->memberid?>"><?=lang('Global.manage')?></button>
+                    </td>
+                </tr>
+            <?php
+                }
+            } else {
+                echo '<tr><td class="uk-text-center uk-text-meta uk-text-italic"  colspan="6">'.lang('Global.noData').'</td></tr>';
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+<div class="uk-margin"><?= $pager->links('users', 'uikit') ?></div>
 <?php foreach ($users as $user) { ?>
 <div class="uk-flex-top" id="user-<?=$user->memberid?>" uk-modal>
     <div class="uk-modal-dialog uk-margin-auto-vertical">
@@ -53,7 +139,13 @@
             <h2 class="uk-modal-title"><?=$user->firstname?> <?=$user->lastname?></h2>
         </div>
         <div class="uk-modal-body">
-            
+            <div class="uk-child-width-auto uk-flex-center" uk-grid>
+                <div><a class="uk-button uk-button-primary uk-text-uppercase">Detail</a></div>
+                <div><a class="uk-button uk-button-secondary uk-text-uppercase" href="users/update/<?=$user->memberid?>"><?=lang('Global.edit')?></a></div>
+                <div>
+                    <a class="uk-button uk-button-danger uk-text-uppercase" href="users/delete/<?=$user->memberid?>"><?=lang('Global.delete')?></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -17,7 +17,16 @@
                 <li class="uk-nav-header">Menu</li>
 
                 <!-- Dashboard -->
-                <li class="@if(request()->is('admin')) uk-active @endif"><a href="dashboard"><span class="uk-margin-small-right" uk-icon="desktop"></span> <?=lang('Global.dashboard')?></a></li>
+                <li class="<?=($uri->getSegment(1) === 'dashboard') ? 'uk-active' : ''?>"><a href="dashboard"><span class="uk-margin-small-right" uk-icon="desktop"></span> <?=lang('Global.dashboard')?></a></li>
+                <li class="uk-parent <?=($uri->getSegment(1) === 'users') ? 'uk-active' : ''?>">
+                    <a href="#"><span class="uk-margin-small-right" uk-icon="users"></span> <?=lang('Global.Users')?> <span uk-nav-parent-icon></span></a>
+                    <ul class="uk-nav-sub">
+                        <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'newmember')) ? 'uk-active' : ''?>"><a href="users/newmember">+ <?=lang('Global.newMember')?></a></li>
+                        <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === '')) ? 'uk-active' : ''?>"><a href="users"><?=lang('Global.memberList')?></a></li>
+                        <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'extend')) ? 'uk-active' : ''?>"><a href="users/extend"><?=lang('Global.extend')?></a></li>
+                        <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'checkin')) ? 'uk-active' : ''?>"><a href="users/checkin"><?=lang('Global.checkIn')?></a></li>
+                    </ul>
+                </li>
                 <!-- end of Dashboard -->
             </ul>
         </div>
@@ -26,7 +35,16 @@
     <aside class="tm-sidebar-left uk-visible@m">
         <ul class="uk-nav-default uk-nav-divider" uk-nav>
             <!-- Dashboard -->
-            <li class="@if(request()->is('admin')) uk-active @endif"><a href="dashboard"><span class="uk-margin-small-right" uk-icon="desktop"></span> <?=lang('Global.dashboard')?></a></li>
+            <li class="<?=($uri->getSegment(1) === 'dashboard') ? 'uk-active' : ''?>"><a href="dashboard"><span class="uk-margin-small-right" uk-icon="desktop"></span> <?=lang('Global.dashboard')?></a></li>
+            <li class="uk-parent <?=($uri->getSegment(1) === 'users') ? 'uk-active' : ''?>">
+                <a href="#"><span class="uk-margin-small-right" uk-icon="users"></span> <?=lang('Global.Users')?> <span uk-nav-parent-icon></span></a>
+                <ul class="uk-nav-sub">
+                    <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'newmember')) ? 'uk-active' : ''?>"><a href="users/newmember">+ <?=lang('Global.newMember')?></a></li>
+                    <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === '')) ? 'uk-active' : ''?>"><a href="users"><?=lang('Global.memberList')?></a></li>
+                    <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'extend')) ? 'uk-active' : ''?>"><a href="users/extend"><?=lang('Global.extend')?></a></li>
+                    <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'checkin')) ? 'uk-active' : ''?>"><a href="users/checkin"><?=lang('Global.checkIn')?></a></li>
+                </ul>
+            </li>
             <!-- end of Dashboard -->
         </ul>
     </aside>

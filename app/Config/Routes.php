@@ -65,6 +65,7 @@ $routes->group('/', static function ($routes) {
 $routes->group('', ['filter' => 'login'], function($routes) {
     $routes->get('dashboard', 'Home::dashboard');
     $routes->get('myaccount', 'Account::index');
+    $routes->post('updateaccount', 'Account::updateaccount');
 });
 
 // User/Member

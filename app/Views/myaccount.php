@@ -86,32 +86,44 @@
         <main class="tm-main uk-section" style="background-color: #f2f7f8; height: 170px; overflow: auto; resize: both;" uk-height-viewport="offset-top: .uk-navbar-container; offset-bottom: .account-footer;">
             <div class="uk-container">
                 <?= view('Views/Auth/_message_block') ?>
-                <div class="uk-child-width-1-2@m uk-grid-small uk-grid-divider" uk-grid>
-                    <div>
-                        <div class="uk-child-width-auto" uk-grid>
-                            <div>
-                                <div class="uk-text-meta"><?=lang('Global.fullname')?></div>
-                                <div class="uk-text-uppercase"><?=$fullname?></div>
+                <form class="uk-form-horizontal" action="updateaccount" method="POST">
+                    <div class="uk-child-width-1-2@m uk-grid-small uk-grid-divider" uk-grid>
+                        <div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label"><?=lang('Global.memberid')?></label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" type="text" value="<?=$account->memberid?>" disabled />
+                                </div>
                             </div>
-                            <div>
-                                <div class="uk-text-meta"><?=lang('Global.memberid')?></div>
-                                <div class="uk-text-uppercase"><?=$account->memberid?></div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="firstname"><?=lang('Global.firstname')?></label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" type="text" name="firstname" value="<?=$account->firstname?>" required />
+                                </div>
                             </div>
-                            <div>
-                                <div class="uk-text-meta"><?=lang('Global.phone')?></div>
-                                <div class="uk-text-uppercase"><?=$account->phone?></div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="lastname"><?=lang('Global.lastname')?></label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" type="text" name="lastname" value="<?=$account->lastname?>" required />
+                                </div>
                             </div>
-                            <div>
-                                <div class="uk-text-meta"><?=lang('Auth.email')?></div>
-                                <div class="uk-text-uppercase"><?=$account->email?></div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="username"><?=lang('Auth.username')?></label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" type="text" name="username" value="<?=$account->username?>" required />
+                                </div>
                             </div>
-                            <div>
-                                <div class="uk-text-meta"><?=lang('Global.registerdate')?></div>
-                                <div class="uk-text-uppercase"><?=date('d-m-Y', strtotime($account->created_at))?></div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="email"><?=lang('Auth.email')?></label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" type="email" name="email" value="<?=$account->email?>" required />
+                                </div>
                             </div>
-                            <div>
-                                <div class="uk-text-meta"><?=lang('Global.updatedate')?></div>
-                                <div class="uk-text-uppercase"><?=date('d-m-Y H:i:s', strtotime($account->updated_at))?></div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label"><?=lang('Global.phone')?></label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" type="tel" value="+<?=$account->phone?>" disabled />
+                                </div>
                             </div>
                             <?php
                             $today = date('d-m-Y');
@@ -126,20 +138,43 @@
                                 }
                             }
                             ?>
-                            <div>
-                                <div class="uk-text-meta"><?=lang('Global.expiredate')?></div>
-                                <div class="uk-text-uppercase"><?=$expire?></div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label"><?=lang('Global.expiredate')?></label>
+                                <div class="uk-form-controls">
+                                    <?=$expire?>
+                                </div>
+                            </div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label"><?=lang('Global.registerdate')?></label>
+                                <div class="uk-form-controls">
+                                    <?=date('d-m-Y', strtotime($account->created_at))?>
+                                </div>
+                            </div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label"><?=lang('Global.updatedate')?></label>
+                                <div class="uk-form-controls">
+                                    <?=date('d-m-Y H:i:s', strtotime($account->updated_at))?>
+                                </div>
+                            </div>
+                            <div class="uk-margin">
+                                <a class="uk-button uk-button-secondary uk-button-small" href="forgot"><?=lang('Global.passChange')?></a>
                             </div>
                         </div>
-                    </div>
-                    <div class="uk-flex uk-flex-center">
-                        <div class="uk-width-1-2@m">
-                            <a href="images/member/<?=$account->membercard?>" download>
-                                <img class="uk-width-1-1" src="images/member/<?=$account->membercard?>" />
-                            </a>
+                        <div>
+                            <div class="uk-flex uk-flex-center">
+                                <div class="uk-width-2-3@m">
+                                    <a href="images/member/<?=$account->membercard?>" download>
+                                        <img class="uk-width-1-1" src="images/member/<?=$account->membercard?>" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="uk-text-center uk-text-meta uk-text-italic"><?=lang('Global.imgClick')?></div>
                         </div>
                     </div>
-                </div>
+                    <div class="uk-margin-medium">
+                        <button class="uk-button uk-button-primary uk-button-large uk-text-uppercase" type="submit"><?=lang('Global.save')?></button>
+                    </div>
+                </form>
             </div>
         </main>
         <footer class="account-footer uk-section uk-section-xsmall uk-light" style="background-color: #000;">
@@ -171,6 +206,5 @@
                 </div>
             <?php } ?>
         </footer>
-        @yield('footerScript')
     </body>
 </html>
