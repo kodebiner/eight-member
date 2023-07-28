@@ -8,7 +8,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
-<form class="uk-form-horizontal" action="users/create" method="post">
+<form class="uk-form-horizontal" action="users/updating" method="post">
     <div class="uk-flex-between uk-chidl-width-auto" uk-grid>
         <div><h1>Add New Member</h1></div>
         <div><button class="uk-button uk-button-large uk-button-primary" type="submit">Save</button></div>
@@ -92,6 +92,7 @@
                 </div>
             </div>
             <div class="uk-flex uk-flex-center uk-margin">
+                <input id="memberid" name="memberid" value="<?=$user->memberid?>" hidden />
                 <input id="photo" name="photo" value="<?=old('photo', $user->photo)?>" hidden />
                 <div id="camera"></div>
             </div>

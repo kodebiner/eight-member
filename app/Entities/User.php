@@ -12,9 +12,7 @@ use Gregwar\Image\Image;
 
 class User extends MythUser
 {
-	protected $dates = ['reset_at', 'reset_expires', 'created_at', 'updated_at', 'deleted_at', 'expired_at'];
-
-    /**
+	/**
      * Default attributes.
      * @var array
      */

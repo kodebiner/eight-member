@@ -157,7 +157,7 @@ class Account extends BaseController
         $email->send();
 
         // Redirecting
-        return redirect()->to('users/checkin?memberid='.$newMember->memberid)->with('message', 'New member has been created');
+        return redirect()->to('users/checkin?memberid='.$newMember->memberid)->with('message', lang('Global.memberCreated'));
     }
 
     public function list()
@@ -263,8 +263,66 @@ class Account extends BaseController
         return view('updatemember', $data);
     }
 
+    public function updating()
+    {
+        // Calling Libraries
+        $authorize = service('authorization');
+        
+        // Calling Models & Entities
+        $updateMember = new \App\Entities\User();
+        $UserModel = new UserModel();
+        $GroupUserModel = new GroupUserModel();
+
+        // Populating Data
+        $input = $this->request->getPost();
+        $user = $UserModel->where('memberid', $input['memberid'])->first();
+        $group = $GroupUserModel->where('user_id', $user->id)->first();
+
+        // Validating Input Data
+        $rules = [
+            'firstname'     => 'required',
+            'lastname'      => 'required',
+            'email'         => 'required|valid_email',
+            'role'          => 'required',
+            'expire'        => 'required',
+            'photo'         => 'required'
+        ];
+
+        if (!empty($input['phone'])) {
+            $rules['phone'] = 'numeric';
+        }
+
+        if (! $this->validate($rules)) {
+            return redirect()->back()->withInput($input)->with('errors', $this->validator->getErrors());
+        }
+
+        // Saving Member Data
+        $updateMember->id           = $user->id;
+        $updateMember->firstname    = $input['firstname'];
+        $updateMember->lastname     = $input['lastname'];
+        $updateMember->email        = $input['email'];
+        $updateMember->expired_at   = date('Y-m-d H:i:s', strtotime($input['expire']));
+        $updateMember->photo        = $input['photo'];
+
+        if (!empty($input['phone'])) {
+            $updateMember->phone = $input['country-code'].$input['phone'];
+        }
+
+        $UserModel->save($updateMember);
+        
+        // Asign Member to New Group
+        $authorize->removeUserFromGroup($user->id, $group['group_id']);
+        $authorize->addUserToGroup($user->id, $input['role']);
+
+        // Redirectiong
+        return redirect()->back()->with('message', lang('Global.memberUpdated'));
+    }
+
     public function checkin()
     {
+        // Calling Services
+        $session = \Config\Services::session();
+
         // Calling Model
         $UserModel = new UserModel();
 
@@ -274,6 +332,9 @@ class Account extends BaseController
             $user = $UserModel->where('memberid', $input)->first();
             if (!empty($user)) {
                 $member = $user;
+                if ($user->photo === null) {
+                    $session->setTempdata('error', lang('Global.noPhotoCheckIn'), 5);
+                }
             } else {
                 $member = '';
             }
@@ -311,7 +372,7 @@ class Account extends BaseController
         $CheckinModel->save($fields);
 
         // Redirectiong
-        return redirect()->to('dashboard')->with('message', 'Member has been checked-in');
+        return redirect()->to('dashboard')->with('message', lang('Global.memberCheckedIn'));
     }
 
     public function extend()
@@ -361,6 +422,6 @@ class Account extends BaseController
         $UserModel->save($updateMember);
 
         // Redirecting
-        return redirect()->to('dashboard')->with('message', 'Membership has been extended');
+        return redirect()->to('dashboard')->with('message', lang('Global.memberExtended'));
     }
 }

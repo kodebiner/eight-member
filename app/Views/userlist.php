@@ -209,12 +209,20 @@
         </div>
     </div>
 </div>
-<div class="uk-flex-top" id="delete-confirm-<?=$user->memberid?>" uk-modal>
+<div class="uk-flex-top" id="delete-confirm-<?=$user->memberid?>" uk-modal="bg-close: false">
     <div class="uk-modal-dialog uk-margin-auto-vertical">
         <div class="uk-modal-header">
             <h3 class="uk-modal-title uk-text-center"><?=lang('Global.areYouSure')?></h3>
         </div>
-        <div class="uk-modal-body"></div>
+        <div class="uk-modal-body">
+            <form action="users/delete" method="post">
+                <input name="memberid" value="<?=$user->memberid?>" hidden/>
+                <div class="uk-child-width-auto uk-flex-center" uk-grid>
+                    <div><button class="uk-button uk-button-secondary" type="submit"><?=lang('Global.yes')?></button></div>
+                    <div><a class="uk-button uk-button-danger" onclick="UIkit.modal('#delete-confirm-<?=$user->memberid?>').hide();"><?=lang('Global.no')?></a></div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <?php } ?>

@@ -27,6 +27,11 @@ return [
     'perPage'           => 'per Halaman',
     'areYouSure'        => 'Anda sudah yakin?',
     'currNumber'        => 'Nomor saat ini adalah',
+    'noPhotoCheckIn'    => 'Foto tidak ditemukan. Lengkapi data memberuntuk melanjutkan proses Check In.',
+    'memberCreated'     => 'Member baru berhasil dibuat',
+    'memberUpdated'     => 'Data member berhasih diubah',
+    'memberCheckedIn'   => 'Member berhasil Check In',
+    'memberExtended'    => 'Keanggotaan telah diperpanjang',
 
     // Button
     'manage'            => 'Kelola',
@@ -35,6 +40,9 @@ return [
     'passChange'        => 'Change Password',
     'edit'              => 'Ubah',
     'delete'            => 'Hapus',
+    'takePhoto'         => 'Take Photo',
+    'yes'               => 'Ya',
+    'no'                => 'Tidak',
 
     // Title
     'dashboard'         => 'Dasbor',

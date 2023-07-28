@@ -27,6 +27,11 @@ return [
     'perPage'           => 'per Page',
     'areYouSure'        => 'Are you sure?',
     'currNumber'        => 'Current number is',
+    'noPhotoCheckIn'    => 'Photo not found. Complete the member data to proceed Check In.',
+    'memberCreated'     => 'New member has been created',
+    'memberUpdated'     => 'Member data has been updated',
+    'memberCheckedIn'   => 'Member has Checked In',
+    'memberExtended'    => 'Membership has been extended',
 
     // Button
     'manage'            => 'Manage',
@@ -35,6 +40,9 @@ return [
     'passChange'        => 'Change Password',
     'edit'              => 'Edit',
     'delete'            => 'Delete',
+    'takePhoto'         => 'Take Photo',
+    'yes'               => 'Yes',
+    'no'                => 'No',
 
     // Title
     'dashboard'         => 'Dashboard',

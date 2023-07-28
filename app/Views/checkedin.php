@@ -68,6 +68,7 @@
             <?php } else { ?>
             <div clss="uk-margin">
                 <div class="uk-text-center uk-text-meta"><?=lang('Global.noPhoto')?></div>
+                <div class="uk-text-center"><a class="uk-button uk-button-danger uk-button-large" href="users/update/<?=$user->memberid?>"><?=lang('Global.takePhoto')?></a></div>
             </div>
             <?php } ?>
             <div class="uk-margin uk-text-center">
