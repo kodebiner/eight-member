@@ -26,6 +26,7 @@ return [
     'display'           => 'Display',
     'perPage'           => 'per Page',
     'areYouSure'        => 'Are you sure?',
+    'currNumber'        => 'Current number is',
 
     // Button
     'manage'            => 'Manage',

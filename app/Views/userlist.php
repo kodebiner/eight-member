@@ -132,21 +132,89 @@
 </div>
 <div class="uk-margin"><?= $pager->links('users', 'uikit') ?></div>
 <?php foreach ($users as $user) { ?>
-<div class="uk-flex-top" id="user-<?=$user->memberid?>" uk-modal>
+<div class="uk-flex-top uk-modal-container" id="user-<?=$user->memberid?>" uk-modal>
     <div class="uk-modal-dialog uk-margin-auto-vertical">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
             <h2 class="uk-modal-title"><?=$user->firstname?> <?=$user->lastname?></h2>
         </div>
-        <div class="uk-modal-body">
-            <div class="uk-child-width-auto uk-flex-center" uk-grid>
-                <div><a class="uk-button uk-button-primary uk-text-uppercase">Detail</a></div>
-                <div><a class="uk-button uk-button-secondary uk-text-uppercase" href="users/update/<?=$user->memberid?>"><?=lang('Global.edit')?></a></div>
+        <div class="uk-modal-body" uk-overflow-auto>
+            <div class="uk-child-width-1-2@m uk-grid-divider" uk-grid>
+                <div class="uk-form-horizontal">
+                    <div class="uk-margin">
+                        <label class="uk-form-label"><?=lang('Global.fullname')?></label>
+                        <div class="uk-form-controls uk-h3 uk-margin-remove"><?=$user->firstname?> <?=$user->lastname?></div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label"><?=lang('Global.memberid')?></label>
+                        <div class="uk-form-controls uk-h3 uk-margin-remove"><?=$user->memberid?></div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label"><?=lang('Auth.username')?></label>
+                        <div class="uk-form-controls uk-h3 uk-margin-remove"><?=$user->username?></div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label"><?=lang('Global.phone')?></label>
+                        <div class="uk-form-controls uk-h3 uk-margin-remove">+<?=$user->phone?></div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label"><?=lang('Auth.email')?></label>
+                        <div class="uk-form-controls uk-h3 uk-margin-remove"><?=$user->email?></div>
+                    </div>
+                    <?php
+                    if ($user->expired_at != null) {
+                        $today = date('d-m-Y');
+                        $expire = date('d-m-Y', strtotime($user->expired_at));
+                        if ($expire < $today) {
+                            $style = 'style="background-color:#cc0b24; color:#fff; padding:10px;"';
+                        } else {
+                            $style = 'style="background-color:#04bf04; color:#fff; padding:10px;"';
+                        }
+                    } else {
+                        $expire = '<span class="uk-text-italic" style="color:#fff;">'.lang('Global.notSubscribed').'</span>';
+                        $style = 'style="background-color:#cc0b24; padding:10px;"';
+                    }
+                    ?>
+                    <div class="uk-margin">
+                        <label class="uk-form-label"><?=lang('Global.expiredate')?></label>
+                        <div class="uk-form-controls uk-h3 uk-margin-remove"><span <?=$style?>><?=$expire?></span></div>
+                    </div>
+                </div>
                 <div>
-                    <a class="uk-button uk-button-danger uk-text-uppercase" href="users/delete/<?=$user->memberid?>"><?=lang('Global.delete')?></a>
+                    <?php if (isset($user->photo)) { ?>
+                    <div class="uk-margin">
+                        <img class="uk-width-1-1" src="images/member/<?=$user->photo?>" />
+                    </div>
+                    <?php } else { ?>
+                    <div clss="uk-margin">
+                        <div class="uk-text-center uk-text-meta"><?=lang('Global.noPhoto')?></div>
+                    </div>
+                    <?php } ?>
+                    <div class="uk-margin uk-text-center">
+                        <?php
+                        $msg = urlencode(base_url().'images/member/'.$user->membercard);
+                        ?>
+                        <a class="uk-button uk-button-secondary" href="https://wa.me/<?=$user->phone?>?text=<?=$msg?>" target="_blank"><span uk-icon="whatsapp"></span> <?=lang('Global.sendMembercard')?></a>
+                    </div>                    
                 </div>
             </div>
         </div>
+        <div class="uk-modal-footer">
+            <div class="uk-child-width-auto uk-flex-center" uk-grid>
+                <div><a class="uk-button uk-button-secondary uk-text-uppercase" href="users/update/<?=$user->memberid?>"><?=lang('Global.edit')?></a></div>
+                <div>
+                    <a class="uk-button uk-button-primary uk-text-uppercase" href="#delete-confirm-<?=$user->memberid?>" uk-toggle><?=lang('Global.delete')?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="uk-flex-top" id="delete-confirm-<?=$user->memberid?>" uk-modal>
+    <div class="uk-modal-dialog uk-margin-auto-vertical">
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title uk-text-center"><?=lang('Global.areYouSure')?></h3>
+        </div>
+        <div class="uk-modal-body"></div>
     </div>
 </div>
 <?php } ?>

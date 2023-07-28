@@ -101,7 +101,7 @@ class Account extends BaseController
             'photo'         => 'required'
         ];
         if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            return redirect()->back()->withInput($input)->with('errors', $this->validator->getErrors());
         }
 
         // New User Data
@@ -230,6 +230,37 @@ class Account extends BaseController
         $data['input']          = $dispInput;
 
         return view('userlist', $data);
+    }
+
+    public function update($memberid)
+    {
+        // Calling Models
+        $UserModel = new UserModel();
+        $GroupModel = new GroupModel();
+        $GroupUserModel = new GroupUserModel();
+
+        // Populating Data
+        $user = $UserModel->where('memberid', $memberid)->first();
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, "https://restcountries.com/v3.1/all?fields=name,idd");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $country = json_decode(curl_exec($curl), true);
+        $countrysort = array_column($country, 'name');
+        array_multisort($countrysort, SORT_ASC, $country);
+        curl_close($curl);
+
+        // Parsing Data to View
+        $data                   = $this->data;
+        $data['title']          = lang('Global.myAccount');
+        $data['description']    = lang('Global.myAccDesc');
+        $data['user']           = $user;
+        $data['userrole']       = $GroupUserModel->where('user_id', $user->id)->first();
+        $data['groups']         = $GroupModel->findAll();
+        $data['countries']      = $country;
+
+        // Rendering View
+        return view('updatemember', $data);
     }
 
     public function checkin()

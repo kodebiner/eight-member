@@ -77,6 +77,7 @@ $routes->group('users', ['filter' => 'login'], function($routes) {
     $routes->post('checked', 'Account::checked', ['filter' => 'role:owner,staff']);
     $routes->get('extend', 'Account::extend', ['filter' => 'role:owner,staff']);
     $routes->post('extending', 'Account::extending', ['filter' => 'role:owner,staff']);
+    $routes->get('update/(:num)', 'Account::update/$1', ['filter' => 'role:owner,staff']);
 });
 
 

@@ -25,7 +25,8 @@ return [
     'search'            => 'Cari',
     'display'           => 'Tampilkan',
     'perPage'           => 'per Halaman',
-    'areYouSure'        => 'Anda sudah yahin?',
+    'areYouSure'        => 'Anda sudah yakin?',
+    'currNumber'        => 'Nomor saat ini adalah',
 
     // Button
     'manage'            => 'Kelola',

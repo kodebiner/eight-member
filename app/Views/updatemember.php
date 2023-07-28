@@ -18,19 +18,19 @@
             <div class="uk-margin">
                 <label class="uk-form-label" for="firstname"><?=lang('Global.firstname')?></label>
                 <div class="uk-form-controls">
-                    <input class="uk-input" type="text" id="firstname" name="firstname" value="<?=old('firstname')?>" required/>
+                    <input class="uk-input" type="text" id="firstname" name="firstname" value="<?=old('firstname', $user->firstname)?>" required/>
                 </div>
             </div>
             <div class="uk-margin">
                 <label class="uk-form-label" for="lastname"><?=lang('Global.lastname')?></label>
                 <div class="uk-form-controls">
-                    <input class="uk-input" type="text" id="lastname" name="lastname" value="<?=old('lastname')?>" required/>
+                    <input class="uk-input" type="text" id="lastname" name="lastname" value="<?=old('lastname', $user->lastname)?>" required/>
                 </div>
             </div>
             <div class="uk-margin">
                 <label class="uk-form-label" for="email"><?=lang('Auth.email')?></label>
                 <div class="uk-form-controls">
-                    <input class="uk-input" type="email" id="email" name="email" value="<?=old('email')?>" required/>
+                    <input class="uk-input" type="email" id="email" name="email" value="<?=old('email', $user->email)?>" required/>
                 </div>
             </div>
             <div class="uk-margin">
@@ -38,7 +38,7 @@
                 <div class="uk-form-controls">
                     <div uk-grid>
                         <div class="uk-width-1-3@m">
-                            <select class="uk-select" id="country-code" name="country-code" required>
+                            <select class="uk-select" id="country-code" name="country-code">
                                 <?php                                
                                 foreach ($countries as $country) {
                                     if (!empty($country['idd']['root'])) {
@@ -55,9 +55,10 @@
                             </select>
                         </div>
                         <div class="uk-width-2-3@m">
-                            <input class="uk-input" type="tel" id="phone" name="phone" required/>
+                            <input class="uk-input" type="tel" id="phone" name="phone"/>
                         </div>
                     </div>
+                    <div class="uk-margin-small uk-text-meta">Current number is +<?=$user->phone?></div>
                 </div>
             </div>
             <div class="uk-margin">
@@ -67,7 +68,7 @@
                         <?php
                         foreach ($groups as $group) {
                             if (($role === 'owner') && (($group->name === 'owner') || ($group->name === 'staff'))) {
-                                if (old('role') === $group->id) {
+                                if (old('role', $userrole['group_id']) === $group->id) {
                                     $selected = 'selected';
                                 } else {
                                     $selected = '';
@@ -86,12 +87,12 @@
                 <div class="uk-form-controls">
                     <div class="uk-inline">
                         <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
-                        <input class="uk-input uk-form-width-medium" type="text" id="expire" name="expire" value="<?=old('expire')?>" required/>
+                        <input class="uk-input uk-form-width-medium" type="text" id="expire" name="expire" value="<?=old('expire', date('Y-m-d', strtotime($user->expired_at)))?>" required/>
                     </div>
                 </div>
             </div>
             <div class="uk-flex uk-flex-center uk-margin">
-                <input id="photo" name="photo" value="<?=old('photo')?>" hidden />
+                <input id="photo" name="photo" value="<?=old('photo', $user->photo)?>" hidden />
                 <div id="camera"></div>
             </div>
             <div class="uk-flex uk-flex-center uk-margin">
@@ -104,6 +105,8 @@
                     <?php
                     if (old('photo') != null) {
                         echo '<img class="uk-width-1-1" src="'.old('photo').'" />';
+                    } elseif ($user->photo != null) {
+                        echo '<img class="uk-width-1-1" src="images/member/'.$user->photo.'" />';
                     }
                     ?>
                 </div> 
