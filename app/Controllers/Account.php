@@ -9,6 +9,15 @@ use App\Models\CheckinModel;
 
 class Account extends BaseController
 {
+    protected $auth;
+    protected $config;
+
+    public function __construct()
+    {
+        $this->config = config('Auth');
+        $this->auth   = service('authentication');
+    }
+    
     public function index()
     {
         $data                   = $this->data;
@@ -22,10 +31,10 @@ class Account extends BaseController
     {
         // Calling Models & Entities
         $UserModel = new UserModel();
-        $account = new \App\Entities\User();
 
         // Populating Data
         $input = $this->request->getPost();
+        $user = $UserModel->find($this->data['uid']);
 
         // Validating Data
         $rules = [
@@ -39,12 +48,11 @@ class Account extends BaseController
         }
 
         // Saving Data
-        $account->id        = $this->data['uid'];
-        $account->username  = $input['username'];
-        $account->firstname = $input['firstname'];
-        $account->lastname  = $input['lastname'];
-        $account->email     = $input['email'];
-        $UserModel->save($account);
+        $user->username  = $input['username'];
+        $user->firstname = $input['firstname'];
+        $user->lastname  = $input['lastname'];
+        $user->email     = $input['email'];
+        $UserModel->save($user);
 
         // Redirecting
         return redirect()->back()->with('message', 'data has been saved');
@@ -187,7 +195,11 @@ class Account extends BaseController
             foreach ($GroupUser as $GroupUser) {
                 $userids[] = $GroupUser['user_id'];
             }
-            $users = $UserModel->whereIn('id', $userids)->paginate($sort, 'users');
+            if (!empty($userids)) {
+                $users = $UserModel->whereIn('id', $userids)->paginate($sort, 'users');
+            } else {
+                $users = $UserModel->where('id', '0')->paginate($sort, 'users');
+            }
         } elseif ((isset($input['role'])) && ($input['role'] != '0') && (isset($input['search']) && !empty($input['search']))) {
             $userids = array();
             $GroupUser = $GroupUserModel->where('group_id', $input['role'])->find();
@@ -199,7 +211,11 @@ class Account extends BaseController
                 'lastname'      => $input['search'],
                 'username'      => $input['search']
             ];
-            $users = $UserModel->whereIn('id', $userids)->where('firstname', $input['search'])->orWhere('lastname', $input['search'])->orWhere('username', $input['search'])->paginate($sort, 'users');
+            if (!empty($userids)) {
+                $users = $UserModel->whereIn('id', $userids)->where('firstname', $input['search'])->orWhere('lastname', $input['search'])->orWhere('username', $input['search'])->paginate($sort, 'users');
+            } else {
+                $users = $UserModel->where('id', '0')->paginate($sort, 'users');
+            }
         } elseif (((empty($input['role'])) || ($input['role'] === '0')) && (isset($input['search']) && !empty($input['search']))) {
             $searchArr = [
                 'firstname'     => $input['search'],
@@ -269,7 +285,6 @@ class Account extends BaseController
         $authorize = service('authorization');
         
         // Calling Models & Entities
-        $updateMember = new \App\Entities\User();
         $UserModel = new UserModel();
         $GroupUserModel = new GroupUserModel();
 
@@ -297,18 +312,17 @@ class Account extends BaseController
         }
 
         // Saving Member Data
-        $updateMember->id           = $user->id;
-        $updateMember->firstname    = $input['firstname'];
-        $updateMember->lastname     = $input['lastname'];
-        $updateMember->email        = $input['email'];
-        $updateMember->expired_at   = date('Y-m-d H:i:s', strtotime($input['expire']));
-        $updateMember->photo        = $input['photo'];
+        $user->firstname    = $input['firstname'];
+        $user->lastname     = $input['lastname'];
+        $user->email        = $input['email'];
+        $user->expired_at   = date('Y-m-d H:i:s', strtotime($input['expire']));
+        $user->photo        = $input['photo'];
 
         if (!empty($input['phone'])) {
-            $updateMember->phone = $input['country-code'].$input['phone'];
+            $user->phone = $input['country-code'].$input['phone'];
         }
 
-        $UserModel->save($updateMember);
+        $UserModel->save($user);
         
         // Asign Member to New Group
         $authorize->removeUserFromGroup($user->id, $group['group_id']);
