@@ -62,6 +62,7 @@
                 <select class="uk-select uk-form-width-xsmall" id="sort" name="sort">
                     <option value="10" <?=(($input['sort'] === '10') || (empty($input['sort']))) ? 'selected' : ''?>>10</option>
                     <option value="25" <?=($input['sort'] === '25') ? 'selected' : ''?>>25</option>
+                    <option value="50" <?=($input['sort'] === '50') ? 'selected' : ''?>>50</option>
                     <option value="100" <?=($input['sort'] === '100') ? 'selected' : ''?>>100</option>
                 </select>
             </div>
@@ -163,8 +164,8 @@
                     </div>
                     <?php
                     if ($user->expired_at != null) {
-                        $today = date('d-m-Y');
-                        $expire = date('d-m-Y', strtotime($user->expired_at));
+                        $today = date('Y-m-d');
+                        $expire = date('Y-m-d', strtotime($user->expired_at));
                         if ($expire < $today) {
                             $style = 'style="background-color:#cc0b24; color:#fff; padding:10px;"';
                         } else {

@@ -32,6 +32,8 @@ return [
     'memberUpdated'     => 'Data member berhasih diubah',
     'memberCheckedIn'   => 'Member berhasil Check In',
     'memberExtended'    => 'Keanggotaan telah diperpanjang',
+    'from'              => 'dari',
+    'to'                => 'hingga',
 
     // Button
     'manage'            => 'Kelola',
@@ -53,6 +55,7 @@ return [
     'checkIn'           => 'Check-In',
     'extend'            => 'Perpanjangan',
     'updateMember'      => 'Perbarui Member',
+    'checkinLog'        => 'Catatan Check-In',
 
     // Description
     'dashdesc'          => 'Informasi global mengenai bisnis anda',

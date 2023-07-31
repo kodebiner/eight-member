@@ -27,6 +27,7 @@
                         <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'checkin')) ? 'uk-active' : ''?>"><a href="users/checkin"><?=lang('Global.checkIn')?></a></li>
                     </ul>
                 </li>
+                <li class="<?=(($uri->getSegment(1) === 'report') && ($uri->getSegment(2) === 'checkin')) ? 'uk-active' : ''?>"><a href="report/checkin"><span class="uk-margin-small-right" uk-icon="database"></span> <?=lang('Global.checkinLog')?></a></li>
                 <!-- end of Dashboard -->
             </ul>
         </div>
@@ -45,6 +46,7 @@
                     <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'checkin')) ? 'uk-active' : ''?>"><a href="users/checkin"><?=lang('Global.checkIn')?></a></li>
                 </ul>
             </li>
+            <li class="<?=(($uri->getSegment(1) === 'report') && ($uri->getSegment(2) === 'checkin')) ? 'uk-active' : ''?>"><a href="report/checkin"><span class="uk-margin-small-right" uk-icon="database"></span> <?=lang('Global.checkinLog')?></a></li>
             <!-- end of Dashboard -->
         </ul>
     </aside>

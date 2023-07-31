@@ -32,6 +32,8 @@ return [
     'memberUpdated'     => 'Member data has been updated',
     'memberCheckedIn'   => 'Member has Checked In',
     'memberExtended'    => 'Membership has been extended',
+    'from'              => 'from',
+    'to'                => 'to',
 
     // Button
     'manage'            => 'Manage',
@@ -53,6 +55,7 @@ return [
     'checkIn'           => 'Check-In',
     'extend'            => 'Extend',
     'updateMember'      => 'Update Member',
+    'checkinLog'        => 'Check-In Log',
 
     // Description
     'dashdesc'          => 'Global information about your business',

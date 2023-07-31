@@ -81,6 +81,11 @@ $routes->group('users', ['filter' => 'login'], function($routes) {
     $routes->post('updating', 'Account::updating', ['filter' => 'role:owner,staff']);
 });
 
+// Report
+$routes->group('report', ['filter' => 'login'], function($routes) {
+    $routes->get('checkin', 'Report::checkin', ['filter' => 'role:owner,staff']);
+});
+
 
 /*
  * --------------------------------------------------------------------

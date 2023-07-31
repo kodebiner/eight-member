@@ -36,13 +36,13 @@
             <div class="uk-margin">
                 <div class="uk-form-label"><?=lang('Global.registerdate')?></div>
                 <div class="uk-form-controls">
-                    <div class="uk-h2 uk-margin-remove"><?=date('d-m-Y H:i:s', strtotime($user->created_at))?></div>
+                    <div class="uk-h2 uk-margin-remove"><?=date('Y-m-d H:i:s', strtotime($user->created_at))?></div>
                 </div>
             </div>
             <?php
             if ($user->expired_at != null) {
-                $today = date('d-m-Y');
-                $expire = date('d-m-Y', strtotime($user->expired_at));
+                $today = date('Y-m-d');
+                $expire = date('Y-m-d', strtotime($user->expired_at));
                 if ($expire < $today) {
                     $style = 'style="background-color:#cc0b24; color:#fff;"';
                 } else {
@@ -80,9 +80,9 @@
         </div>
     </div>
     <?php
-    $now = date('d-m-Y');
     if ($user->expired_at != null) {
-        $ed = date('d-m-Y', strtotime($user->expired_at));
+        $now = date('Y-m-d');
+        $ed = date('Y-m-d', strtotime($user->expired_at));
         if ($ed < $now) {
             $disable = 'disabled';
             $color = '#999';
