@@ -6,6 +6,7 @@ use App\Models\UserModel;
 use App\Models\GroupUserModel;
 use Myth\Auth\Models\GroupModel;
 use App\Models\CheckinModel;
+use App\Models\ActivityModel;
 
 class Account extends BaseController
 {
@@ -76,8 +77,8 @@ class Account extends BaseController
 
         // Parsing Data to View
         $data                   = $this->data;
-        $data['title']          = lang('Global.myAccount');
-        $data['description']    = lang('Global.myAccDesc');
+        $data['title']          = lang('Global.newMember');
+        $data['description']    = lang('Global.newMemberDesc');
         $data['groups']         = $groups;
         $data['countries']      = $country;
 
@@ -93,6 +94,7 @@ class Account extends BaseController
         // Calling Models & Entities
         $newMember = new \App\Entities\User();
         $UserModel = new UserModel();
+        $ActivityModel = new ActivityModel();
 
         // Populating Data
         $input = $this->request->getPost();
@@ -163,6 +165,14 @@ class Account extends BaseController
         $email->setSubject(lang('Auth.activationSubject'));
         $email->setMessage(view('Auth/emails/admnewmember', ['hash' => $newMember->reset_hash, 'username' => $newMember->username, 'cid' => $cid]));
         $email->send();
+
+        // Recording Activity
+        $activity = [
+            'user_id'   => $this->data['uid'],
+            'activity'  => 'Create new member '.$newMember->memberid,
+            'done_at'   => date('Y-m-d H:i:s')
+        ];
+        $ActivityModel->save($activity);
 
         // Redirecting
         return redirect()->to('users/checkin?memberid='.$newMember->memberid)->with('message', lang('Global.memberCreated'));
@@ -238,8 +248,8 @@ class Account extends BaseController
         }
 
         $data                   = $this->data;
-        $data['title']          = lang('Global.myAccount');
-        $data['description']    = lang('Global.myAccDesc');
+        $data['title']          = lang('Global.memberList');
+        $data['description']    = lang('Global.memberListDesc');
         $data['users']          = $users;
         $data['groups']         = $GroupModel->findAll();
         $data['pager']          = $UserModel->pager;
@@ -268,8 +278,8 @@ class Account extends BaseController
 
         // Parsing Data to View
         $data                   = $this->data;
-        $data['title']          = lang('Global.myAccount');
-        $data['description']    = lang('Global.myAccDesc');
+        $data['title']          = lang('Global.updateMember');
+        $data['description']    = lang('Global.updateMemberDesc');
         $data['user']           = $user;
         $data['userrole']       = $GroupUserModel->where('user_id', $user->id)->first();
         $data['groups']         = $GroupModel->findAll();
@@ -287,6 +297,7 @@ class Account extends BaseController
         // Calling Models & Entities
         $UserModel = new UserModel();
         $GroupUserModel = new GroupUserModel();
+        $ActivityModel = new ActivityModel();
 
         // Populating Data
         $input = $this->request->getPost();
@@ -328,8 +339,41 @@ class Account extends BaseController
         $authorize->removeUserFromGroup($user->id, $group['group_id']);
         $authorize->addUserToGroup($user->id, $input['role']);
 
+        // Recording Activity
+        $activity = [
+            'user_id'   => $this->data['uid'],
+            'activity'  => 'Update member '.$user->memberid,
+            'done_at'   => date('Y-m-d H:i:s')
+        ];
+        $ActivityModel->save($activity);
+
         // Redirectiong
         return redirect()->back()->with('message', lang('Global.memberUpdated'));
+    }
+
+    public function delete()
+    {
+        // Calling Models
+        $UserModel = new UserModel();
+        $ActivityModel = new ActivityModel();
+
+        // Populating Data
+        $input = $this->request->getPost();
+        $user = $UserModel->where('memberid', $input['memberid'])->first();
+
+        // Deleting Member
+        $UserModel->delete($user->id);
+
+        // Recording Activity
+        $activity = [
+            'user_id'   => $this->data['uid'],
+            'activity'  => 'Delete member '.$user->memberid,
+            'done_at'   => date('Y-m-d H:i:s')
+        ];
+        $ActivityModel->save($activity);
+
+        // Redirecting
+        return redirect()->back()->with('error', lang('Global.memberDeleted'));
     }
 
     public function checkin()
@@ -356,8 +400,8 @@ class Account extends BaseController
 
         // Parsing Data to View
         $data                   = $this->data;
-        $data['title']          = lang('Global.myAccount');
-        $data['description']    = lang('Global.myAccDesc');
+        $data['title']          = lang('Global.checkIn');
+        $data['description']    = lang('Global.checkInDesc');
         if (isset($input)) {
             $data['user'] = $member;
         };
@@ -373,10 +417,13 @@ class Account extends BaseController
     public function checked()
     {
         // Calling Model
+        $UserModel = new UserModel();
         $CheckinModel = new CheckinModel();
+        $ActivityModel = new ActivityModel();
 
         // Populating Data
         $input = $this->request->getPost('id');
+        $user = $UserModel->find($input);
 
         // Saving Data
         $fields = [
@@ -385,8 +432,16 @@ class Account extends BaseController
         ];
         $CheckinModel->save($fields);
 
+        // Recording Activity
+        $activity = [
+            'user_id'   => $this->data['uid'],
+            'activity'  => 'Check-In member '.$user->memberid,
+            'done_at'   => date('Y-m-d H:i:s')
+        ];
+        $ActivityModel->save($activity);
+
         // Redirectiong
-        return redirect()->to('dashboard')->with('message', lang('Global.memberCheckedIn'));
+        return redirect()->back()->with('message', lang('Global.memberCheckedIn'));
     }
 
     public function extend()
@@ -407,8 +462,8 @@ class Account extends BaseController
 
         // Parsing Data to View
         $data                   = $this->data;
-        $data['title']          = lang('Global.myAccount');
-        $data['description']    = lang('Global.myAccDesc');
+        $data['title']          = lang('Global.extend');
+        $data['description']    = lang('Global.extendDesc');
         if (isset($input)) {
             $data['user'] = $member;
         };
@@ -424,16 +479,25 @@ class Account extends BaseController
     public function extending()
     {
         // Calling Models & Entities
-        $updateMember = new \App\Entities\User();
         $UserModel = new UserModel();
+        $ActivityModel = new ActivityModel();
 
         // Populating Data
         $input = $this->request->getPost();
+        $user = $UserModel->find($input['id']);
 
         // Saving Data
-        $updateMember->id           = $input['id'];
-        $updateMember->expired_at   = date('Y-m-d H:i:s', strtotime($input['expire']));
-        $UserModel->save($updateMember);
+        $user->id           = $input['id'];
+        $user->expired_at   = date('Y-m-d H:i:s', strtotime($input['expire']));
+        $UserModel->save($user);
+
+        // Recording Activity
+        $activity = [
+            'user_id'   => $this->data['uid'],
+            'activity'  => 'Extend membership '.$user->memberid,
+            'done_at'   => date('Y-m-d H:i:s')
+        ];
+        $ActivityModel->save($activity);
 
         // Redirecting
         return redirect()->to('dashboard')->with('message', lang('Global.memberExtended'));

@@ -79,6 +79,7 @@ $routes->group('users', ['filter' => 'login'], function($routes) {
     $routes->post('extending', 'Account::extending', ['filter' => 'role:owner,staff']);
     $routes->get('update/(:num)', 'Account::update/$1', ['filter' => 'role:owner,staff']);
     $routes->post('updating', 'Account::updating', ['filter' => 'role:owner,staff']);
+    $routes->post('delete', 'Account::delete', ['filter' => 'role:owner,staff']);
 });
 
 // Report

@@ -34,6 +34,7 @@ return [
     'memberExtended'    => 'Keanggotaan telah diperpanjang',
     'from'              => 'dari',
     'to'                => 'hingga',
+    'memberDeleted'     => 'Member telah berhasil dihapus',
 
     // Button
     'manage'            => 'Kelola',
@@ -65,6 +66,7 @@ return [
     'checkInDesc'       => 'Check-in member',
     'extendDesc'        => 'Perpanjangan berlangganan member',
     'updateMemberDesc'  => 'Formulir untuk memperbarui informasi member',
+    'checkinLogDesc'    => 'Catatan check-in member',
 
     // Messages
     'emailNotes'        => '* Email ini dikirim secara otomatis. Jangan membalas email ini.',

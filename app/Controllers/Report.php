@@ -59,8 +59,8 @@ class Report extends BaseController
         $dispinput['sort'] = $sort;
 
         $data                   = $this->data;
-        $data['title']          = lang('Global.myAccount');
-        $data['description']    = lang('Global.myAccDesc');
+        $data['title']          = lang('Global.checkinLog');
+        $data['description']    = lang('Global.checkinLogDesc');
         $data['checkins']       = $checkin;
         $data['users']          = $UserModel->findAll();
         $data['pager']          = $CheckinModel->pager;

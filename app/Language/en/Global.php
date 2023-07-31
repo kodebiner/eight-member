@@ -34,6 +34,7 @@ return [
     'memberExtended'    => 'Membership has been extended',
     'from'              => 'from',
     'to'                => 'to',
+    'memberDeleted'     => 'Member has been deleted',
 
     // Button
     'manage'            => 'Manage',
@@ -65,6 +66,7 @@ return [
     'checkInDesc'       => 'Checking a member in',
     'extendDesc'        => 'Exten the member subscription',
     'updateMemberDesc'  => 'Form to update member information',
+    'checkinLogDesc'    => 'Log of checked-in member',
 
     // Messages
     'emailNotes'        => '* This email sent automatically. Do not reply to this email.',
