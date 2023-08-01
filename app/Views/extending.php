@@ -16,8 +16,14 @@
             <div class="uk-text-center">Expired At</div>
             <?php
             $ed = date('d-m-Y', strtotime($user->expired_at));
+            if(strtotime($user->expired_at) < strtotime('-2 months')) {
+                $expired = '<div class="uk-text-center"><span style="background-color:#da2550; color:#fff; padding: 0 5px;">'.lang('Global.adminFeeReq').'</span></div>';
+            } else {
+                $expired = '';
+            }
             ?>
             <div class="uk-h3 uk-margin-remove uk-text-center"><?=$ed?></div>
+            <?=$expired?>
         </div>
         <form action="users/extending" method="post">
             <input name="id" value="<?=$user->id?>" hidden/>

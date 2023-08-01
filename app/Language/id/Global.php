@@ -35,6 +35,7 @@ return [
     'from'              => 'dari',
     'to'                => 'hingga',
     'memberDeleted'     => 'Member telah berhasil dihapus',
+    'adminFeeReq'       => 'Admin fee required',
 
     // Button
     'manage'            => 'Kelola',

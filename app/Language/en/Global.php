@@ -35,6 +35,7 @@ return [
     'from'              => 'from',
     'to'                => 'to',
     'memberDeleted'     => 'Member has been deleted',
+    'adminFeeReq'       => 'Admin fee required',
 
     // Button
     'manage'            => 'Manage',
