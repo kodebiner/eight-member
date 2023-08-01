@@ -35,6 +35,7 @@ $routes->set404Override();
 $routes->get('/', 'Home::index', ['filter' => 'login']);
 $routes->get('phpinfo', 'Home::phpinfo');
 $routes->get('trial', 'Home::trial');
+$routes->get('migration', 'Home::migration');
 
 // Myth/Auth Routes
 $routes->group('/', static function ($routes) {

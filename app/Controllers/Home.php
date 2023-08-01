@@ -37,4 +37,9 @@ class Home extends BaseController
         dd(date('Y-m-d H:i:s', strtotime('2023-07-31')));
         //phpinfo();
     }
+
+    public function migration()
+    {
+        echo command('migration -all');
+    }
 }
