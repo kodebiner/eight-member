@@ -40,6 +40,6 @@ class Home extends BaseController
 
     public function migration()
     {
-        echo command('migration -all');
+        echo command('migrate -all');
     }
 }
