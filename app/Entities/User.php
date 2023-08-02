@@ -41,15 +41,16 @@ class User extends MythUser
 			-> data($this->attributes['memberid'])
 			-> encoding(new Encoding('UTF-8'))
 			-> errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-			-> size(281)
-			-> margin(5)
+			-> size(300)
+			-> margin(10)
+			-> roundBlockSizeMode(new RoundBlockSizeModeMargin(5))
 			-> validateResult(false)
 			-> build();
 
 		$qr->saveToFile(FCPATH.'/images/member/'.$this->attributes['memberid'].'.jpg');
 
 		Image::open(FCPATH.'/images/membercard.jpg')
-			-> merge(Image::open(FCPATH.'/images/member/'.$this->attributes['memberid'].'.jpg'), 370, 475, 281, 281)
+			-> merge(Image::open(FCPATH.'/images/member/'.$this->attributes['memberid'].'.jpg'), 390, 450, 300, 300)
 			-> save(FCPATH.'/images/member/'.$this->attributes['memberid'].'-membercard.jpg');
 
 		unlink(FCPATH.'/images/member/'.$this->attributes['memberid'].'.jpg');
