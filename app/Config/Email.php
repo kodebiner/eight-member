@@ -28,17 +28,17 @@ class Email extends BaseConfig
     /**
      * SMTP Server Address
      */
-    public string $SMTPHost = 'mail.binary111.com';
+    public string $SMTPHost = 'mail.eightgymindonesia.com';
 
     /**
      * SMTP Username
      */
-    public string $SMTPUser = 'no-reply@binary111.com';
+    public string $SMTPUser = 'no-reply@eightgymindonesia.com';
 
     /**
      * SMTP Password
      */
-    public string $SMTPPass = '{[WMr{o1yS41';
+    public string $SMTPPass = 'Ab75fs=?UX]A';
 
     /**
      * SMTP Port
