@@ -441,7 +441,7 @@ class Account extends BaseController
         $ActivityModel->save($activity);
 
         // Redirectiong
-        return redirect()->back()->with('message', lang('Global.memberCheckedIn'));
+        return redirect()->to('users/checkin')->with('message', lang('Global.memberCheckedIn'));
     }
 
     public function extend()
