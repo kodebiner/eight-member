@@ -36,6 +36,10 @@ return [
     'to'                => 'to',
     'memberDeleted'     => 'Member has been deleted',
     'adminFeeReq'       => 'Admin fee required',
+    'type'              => 'type',
+    'promoStatus'       => 'Promo status',
+    'noPromo'           => 'Without Promo',
+    'withPromo'         => 'With Promo',
 
     // Button
     'manage'            => 'Manage',

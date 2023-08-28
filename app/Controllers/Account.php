@@ -488,6 +488,7 @@ class Account extends BaseController
 
         // Saving Data
         $user->id           = $input['id'];
+        $user->sub_type     = $input['promo'];
         $user->expired_at   = date('Y-m-d H:i:s', strtotime($input['expire']));
         $UserModel->save($user);
 

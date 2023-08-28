@@ -36,6 +36,10 @@ return [
     'to'                => 'hingga',
     'memberDeleted'     => 'Member telah berhasil dihapus',
     'adminFeeReq'       => 'Admin fee required',
+    'type'              => 'jenis',
+    'promoStatus'       => 'Status promo',
+    'noPromo'           => 'Tanpa Promo',
+    'withPromo'         => 'Dengan Promo',
 
     // Button
     'manage'            => 'Kelola',

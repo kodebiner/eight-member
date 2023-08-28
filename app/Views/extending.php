@@ -27,11 +27,18 @@
         </div>
         <form action="users/extending" method="post">
             <input name="id" value="<?=$user->id?>" hidden/>
-            <div class="uk-flex uk-flex-center">
+            <div class="uk-margin uk-flex uk-flex-center">
                 <div class="uk-inline">
                     <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
                     <input class="uk-input uk-form-width-medium" type="text" id="expire" name="expire" placeholder="<?=lang('Global.extendTo')?>" required/>
                 </div>
+            </div>
+            <div class="uk-margin uk-flex uk-flex-center">
+                <select class="uk-select uk-width-small" id="promo" name="promo" required>
+                    <option value="" hidded disabled selected><span class="uk-text-italic">-- <?=lang('Global.type')?> --</span></option>
+                    <option value="0"><?=lang('Global.noPromo')?></option>
+                    <option value="1"><?=lang('Global.withPromo')?></option>
+                </select>
             </div>
             <div class="uk-margin uk-text-center">
                 <button class="uk-button uk-button-primary" type="submit"><?=lang('Global.extend')?></button>

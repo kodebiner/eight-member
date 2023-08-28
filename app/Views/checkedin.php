@@ -59,6 +59,12 @@
                     <div class="uk-h2 uk-margin-remove" <?=$style?>><?=$expire?></div>
                 </div>
             </div>
+            <div class="uk-margin">
+                <div class="uk-form-label"><?=lang('Global.promoStatus')?></div>
+                <div class="uk-form-controls">
+                    <div class="uk-h2 uk-margin-remove"><?= ($user->sub_type === '1' ? lang('Global.withPromo') : lang('Global.noPromo')) ?></div>
+                </div>
+            </div>
         </div>
         <div>
             <?php if (isset($user->photo)) { ?>
