@@ -5,7 +5,7 @@
                 <div class="uk-h4 uk-margin-remove"><?=$fullname?></div>
                 <div class="uk-h5 uk-margin-remove"><?=$role?></div>
                 <div class="uk-margin uk-text-center">
-                    <a id="logout-mobile" class="uk-button uk-button-secondary"><span uk-icon="sign-out"></span> <?=lang('Global.logout')?></a>
+                    <a id="logout" class="uk-button uk-button-secondary"><span uk-icon="sign-out"></span> <?=lang('Global.logout')?></a>
                 </div>
             </div>
             <hr class="uk-divider-icon">
@@ -18,6 +18,7 @@
 
                 <!-- Dashboard -->
                 <li class="<?=($uri->getSegment(1) === 'dashboard') ? 'uk-active' : ''?>"><a href="dashboard"><span class="uk-margin-small-right" uk-icon="desktop"></span> <?=lang('Global.dashboard')?></a></li>
+                <li class="<?=($uri->getSegment(1) === 'promo') ? 'uk-active' : ''?>"><a href="promo"><span class="uk-margin-small-right" uk-icon="tag"></span> Promo</a></li>
                 <li class="uk-parent <?=($uri->getSegment(1) === 'users') ? 'uk-active' : ''?>">
                     <a href="#"><span class="uk-margin-small-right" uk-icon="users"></span> <?=lang('Global.Users')?> <span uk-nav-parent-icon></span></a>
                     <ul class="uk-nav-sub">
@@ -37,6 +38,7 @@
         <ul class="uk-nav-default uk-nav-divider" uk-nav>
             <!-- Dashboard -->
             <li class="<?=($uri->getSegment(1) === 'dashboard') ? 'uk-active' : ''?>"><a href="dashboard"><span class="uk-margin-small-right" uk-icon="desktop"></span> <?=lang('Global.dashboard')?></a></li>
+            <li class="<?=($uri->getSegment(1) === 'promo') ? 'uk-active' : ''?>"><a href="promo"><span class="uk-margin-small-right" uk-icon="tag"></span> Promo</a></li>
             <li class="uk-parent <?=($uri->getSegment(1) === 'users') ? 'uk-active' : ''?>">
                 <a href="#"><span class="uk-margin-small-right" uk-icon="users"></span> <?=lang('Global.Users')?> <span uk-nav-parent-icon></span></a>
                 <ul class="uk-nav-sub">

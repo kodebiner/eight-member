@@ -65,6 +65,22 @@
                     <div class="uk-h2 uk-margin-remove"><?= ($user->sub_type === '1' ? lang('Global.withPromo') : lang('Global.noPromo')) ?></div>
                 </div>
             </div>
+            <?php if (!empty($userpromo)) { ?>
+            <div class="uk-margin">
+                <div class="uk-form-label">Promo</div>
+                <div class="uk-form-controls">
+                    <div class="uk-h2 uk-margin-remove">
+                        <?php
+                        foreach ($promos as $promo) {
+                            if ($promo['id'] === $userpromo['promo_id']) {
+                                echo $promo['name'];
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
         </div>
         <div>
             <?php if (isset($user->photo)) { ?>

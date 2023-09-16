@@ -6,6 +6,7 @@ use App\Models\UserModel;
 use App\Models\GroupUserModel;
 use Myth\Auth\Models\GroupModel;
 use App\Models\CheckinModel;
+use App\Models\PromoModel;
 use App\Models\ActivityModel;
 
 class Account extends BaseController
@@ -383,6 +384,7 @@ class Account extends BaseController
 
         // Calling Model
         $UserModel = new UserModel();
+        $PromoModel = new PromoModel();
 
         // Populating Data
         $input = $this->request->getGet('memberid');
@@ -403,8 +405,10 @@ class Account extends BaseController
         $data['title']          = lang('Global.checkIn');
         $data['description']    = lang('Global.checkInDesc');
         if (isset($input)) {
-            $data['user'] = $member;
-        };
+            $data['user']       = $member;
+            $data['userpromo']  = $PromoModel->getUserPromo($member->id);
+        };        
+        $data['promos']         = $PromoModel->withDeleted()->findAll();
 
         // Rendering View
         if (isset($input)) {
@@ -448,6 +452,7 @@ class Account extends BaseController
     {
         // Calling Model
         $UserModel = new UserModel();
+        $PromoModel = new PromoModel();
 
         // Populating Data
         $input = $this->request->getGet('memberid');
@@ -466,6 +471,7 @@ class Account extends BaseController
         $data['description']    = lang('Global.extendDesc');
         if (isset($input)) {
             $data['user'] = $member;
+            $data['promos'] = $PromoModel->findAll();
         };
 
         // Rendering View
@@ -481,16 +487,23 @@ class Account extends BaseController
         // Calling Models & Entities
         $UserModel = new UserModel();
         $ActivityModel = new ActivityModel();
+        $PromoModel = new PromoModel();
 
         // Populating Data
         $input = $this->request->getPost();
         $user = $UserModel->find($input['id']);
 
-        // Saving Data
-        $user->id           = $input['id'];
-        $user->sub_type     = $input['promo'];
+        // Saving User Data
+        $user->sub_type     = $input['sub_type'];
         $user->expired_at   = date('Y-m-d H:i:s', strtotime($input['expire']));
         $UserModel->save($user);
+
+        // Updating Promo
+        if ($input['sub_type'] === '0') {
+            $PromoModel->deleteUserPromo($input['id']);
+        } elseif ($input['sub_type'] === '1') {
+            $PromoModel->addUserPromo($input['id'], $input['promoid']);
+        }
 
         // Recording Activity
         $activity = [

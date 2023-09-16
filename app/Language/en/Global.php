@@ -40,6 +40,14 @@ return [
     'promoStatus'       => 'Promo status',
     'noPromo'           => 'Without Promo',
     'withPromo'         => 'With Promo',
+    'promoName'         => 'Promo Name',
+    'createPromo'       => 'Create Promo',
+    'editPromo'         => 'Edit Promo',
+    'deletePromo'       => 'Delete Promo',
+    'promoAdded'        => 'A promo has been added',
+    'promoUpdated'      => 'A promo has been updated',
+    'promoDeleted'      => 'A promo has been deleted',
+    'selectPromo'       => 'Select a promo',
 
     // Button
     'manage'            => 'Manage',
@@ -62,6 +70,7 @@ return [
     'extend'            => 'Extend',
     'updateMember'      => 'Update Member',
     'checkinLog'        => 'Check-In Log',
+    'promoList'         => 'Promo List',
 
     // Description
     'dashdesc'          => 'Global information about your business',
@@ -72,6 +81,7 @@ return [
     'extendDesc'        => 'Exten the member subscription',
     'updateMemberDesc'  => 'Form to update member information',
     'checkinLogDesc'    => 'Log of checked-in member',
+    'promoListDesc'     => 'List of all promo(s)',
 
     // Messages
     'emailNotes'        => '* This email sent automatically. Do not reply to this email.',

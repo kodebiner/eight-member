@@ -34,12 +34,32 @@
                 </div>
             </div>
             <div class="uk-margin uk-flex uk-flex-center">
-                <select class="uk-select uk-width-small" id="promo" name="promo" required>
-                    <option value="" hidded disabled selected><span class="uk-text-italic">-- <?=lang('Global.type')?> --</span></option>
-                    <option value="0"><?=lang('Global.noPromo')?></option>
-                    <option value="1"><?=lang('Global.withPromo')?></option>
+                <div class="uk-child-width-auto uk-grid-small" uk-grid>
+                    <div><label><input class="uk-radio" type="radio" name="sub_type" value="0" required> <?=lang('Global.noPromo')?></label></div>
+                    <div><label><input class="uk-radio" type="radio" name="sub_type" value="1" required> <?=lang('Global.withPromo')?></label></div>
+                </div>
+            </div>
+            <div id="promo-select" class="uk-margin uk-flex uk-flex-center" hidden>
+                <select class="uk-select uk-width-medium" id="promoid" name="promoid">
+                    <option value="" disabled selected><?=lang('Global.selectPromo')?></option>
+                    <?php
+                    foreach ($promos as $promo) {
+                        echo '<option value="'.$promo['id'].'">'.$promo['name'].'</option>';
+                    }
+                    ?>
                 </select>
             </div>
+            <script>
+                $('input[type=radio][name=sub_type]').change(function() {
+                    if (this.value == '0') {
+                        document.getElementById('promo-select').setAttribute('hidden', '');
+                        document.getElementById('promoid').removeAttribute('required');
+                    } else if (this.value == '1') {
+                        document.getElementById('promo-select').removeAttribute('hidden');
+                        document.getElementById('promoid').setAttribute('required', '');
+                    }
+                });
+            </script>
             <div class="uk-margin uk-text-center">
                 <button class="uk-button uk-button-primary" type="submit"><?=lang('Global.extend')?></button>
             </div>

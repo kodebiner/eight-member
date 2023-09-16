@@ -56,7 +56,7 @@
                                         <div class="tm-navbar-dropdown"><a href="myaccount" class="tm-navbar-preserve uk-link-reset"><span uk-icon="user"></span> <?=lang('Global.profile')?></a></div>
                                     </div>
                                     <div class="uk-margin">
-                                        <a id="logout-desktop" class="uk-button uk-button-secondary"><span uk-icon="sign-out"></span> <?=lang('Global.logout')?></a>
+                                        <a id="logout" class="uk-button uk-button-secondary"><span uk-icon="sign-out"></span> <?=lang('Global.logout')?></a>
                                     </div>
                                 </div>
                             </div>
@@ -104,8 +104,7 @@
             <?php } ?>
         </footer>
         <script type="application/javascript">
-            document.getElementById('logout-desktop').addEventListener('click', logout);
-            document.getElementById('logout-mobile').addEventListener('click', logout);
+            document.getElementById('logout').addEventListener('click', logout);
             function logout() {
                 location.href = 'logout';
             }

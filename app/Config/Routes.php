@@ -88,6 +88,14 @@ $routes->group('report', ['filter' => 'login'], function($routes) {
     $routes->get('checkin', 'Report::checkin', ['filter' => 'role:owner,staff']);
 });
 
+// Promo
+$routes->group('promo', ['filter' => 'login'], function($routes) {
+    $routes->get('', 'Promo::index', ['filter' => 'role:owner,staff']);
+    $routes->post('create', 'Promo::create', ['filter' => 'role:owner,staff']);
+    $routes->post('update/(:num)', 'Promo::update/$1', ['filter' => 'role:owner,staff']);
+    $routes->post('delete', 'Promo::delete', ['filter' => 'role:owner,staff']);
+});
+
 
 /*
  * --------------------------------------------------------------------

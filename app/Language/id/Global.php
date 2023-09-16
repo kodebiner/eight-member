@@ -40,6 +40,14 @@ return [
     'promoStatus'       => 'Status promo',
     'noPromo'           => 'Tanpa Promo',
     'withPromo'         => 'Dengan Promo',
+    'promoName'         => 'Nama Promo',
+    'createPromo'       => 'Buat Promo',
+    'editPromo'         => 'Ubah Promo',
+    'deletePromo'       => 'Hapus Promo',
+    'promoAdded'        => 'Promo berhasil ditambahkan',
+    'promoUpdated'      => 'Promo berhasil diubah',
+    'promoDeleted'      => 'Promo telah dihapus',
+    'selectPromo'       => 'Pilih promo',
 
     // Button
     'manage'            => 'Kelola',
@@ -62,6 +70,7 @@ return [
     'extend'            => 'Perpanjangan',
     'updateMember'      => 'Perbarui Member',
     'checkinLog'        => 'Catatan Check-In',
+    'promoList'         => 'Daftar Promo',
 
     // Description
     'dashdesc'          => 'Informasi global mengenai bisnis anda',
@@ -72,6 +81,7 @@ return [
     'extendDesc'        => 'Perpanjangan berlangganan member',
     'updateMemberDesc'  => 'Formulir untuk memperbarui informasi member',
     'checkinLogDesc'    => 'Catatan check-in member',
+    'promoListDesc'     => 'Daftar semua promo yang ada',
 
     // Messages
     'emailNotes'        => '* Email ini dikirim secara otomatis. Jangan membalas email ini.',
