@@ -48,6 +48,8 @@ return [
     'promoUpdated'      => 'Promo berhasil diubah',
     'promoDeleted'      => 'Promo telah dihapus',
     'selectPromo'       => 'Pilih promo',
+    'phoneInst'         => 'Masukkan Kode Negara dan No Handphone tanpa simbol +. Misal, <b>6281328xxxxxx</b>',
+    'phoneTooltip'      => 'No Handphone akan digunakan untuk mengirimkan membercard melalui Whatsapp',
 
     // Button
     'manage'            => 'Kelola',

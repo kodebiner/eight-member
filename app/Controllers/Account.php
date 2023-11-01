@@ -68,20 +68,11 @@ class Account extends BaseController
         // Populating Data
         $groups = $GroupModel->findAll();
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, "https://restcountries.com/v3.1/all?fields=name,idd");
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $country = json_decode(curl_exec($curl), true);
-        $countrysort = array_column($country, 'name');
-        array_multisort($countrysort, SORT_ASC, $country);
-        curl_close($curl);
-
         // Parsing Data to View
         $data                   = $this->data;
         $data['title']          = lang('Global.newMember');
         $data['description']    = lang('Global.newMemberDesc');
         $data['groups']         = $groups;
-        $data['countries']      = $country;
 
         // Rendering View
         return view('newmember', $data);
@@ -105,7 +96,6 @@ class Account extends BaseController
             'firstname'     => 'required',
             'lastname'      => 'required',
             'email'         => 'required|valid_email|is_unique[users.email]',
-            'country-code'  => 'required',
             'phone'         => 'required|numeric',
             'role'          => 'required',
             'expire'        => 'required',
@@ -121,7 +111,7 @@ class Account extends BaseController
         $newMember->firstname   = $input['firstname'];
         $newMember->lastname    = $input['lastname'];
         $newMember->email       = $input['email'];
-        $newMember->phone       = $input['country-code'].$input['phone'];
+        $newMember->phone       = $input['phone'];
         $newMember->expired_at  = date('Y-m-d H:i:s', strtotime($input['expire']));
 
         $n = 16;
@@ -269,14 +259,6 @@ class Account extends BaseController
         // Populating Data
         $user = $UserModel->where('memberid', $memberid)->first();
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, "https://restcountries.com/v3.1/all?fields=name,idd");
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $country = json_decode(curl_exec($curl), true);
-        $countrysort = array_column($country, 'name');
-        array_multisort($countrysort, SORT_ASC, $country);
-        curl_close($curl);
-
         // Parsing Data to View
         $data                   = $this->data;
         $data['title']          = lang('Global.updateMember');
@@ -284,7 +266,6 @@ class Account extends BaseController
         $data['user']           = $user;
         $data['userrole']       = $GroupUserModel->where('user_id', $user->id)->first();
         $data['groups']         = $GroupModel->findAll();
-        $data['countries']      = $country;
 
         // Rendering View
         return view('updatemember', $data);
@@ -331,7 +312,7 @@ class Account extends BaseController
         $user->photo        = $input['photo'];
 
         if (!empty($input['phone'])) {
-            $user->phone = $input['country-code'].$input['phone'];
+            $user->phone = $input['phone'];
         }
 
         $UserModel->save($user);

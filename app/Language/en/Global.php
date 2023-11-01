@@ -48,6 +48,8 @@ return [
     'promoUpdated'      => 'A promo has been updated',
     'promoDeleted'      => 'A promo has been deleted',
     'selectPromo'       => 'Select a promo',
+    'phoneInst'         => 'Input Country Code and Phone Number without + symbol. Eg. <b>6281328xxxxxx</b>',
+    'phoneTooltip'      => 'Phone Number will be use to send membercard via Whatsapp',
 
     // Button
     'manage'            => 'Manage',

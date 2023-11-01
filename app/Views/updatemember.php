@@ -34,31 +34,10 @@
                 </div>
             </div>
             <div class="uk-margin">
-                <label class="uk-form-label" for="phone"><?=lang('Global.phone')?></label>
+                <label class="uk-form-label" for="phone"><?=lang('Global.phone')?> <sup uk-icon="icon: question; ratio: 0.5;" uk-tooltip="<?=lang('Global.phoneTooltip')?>"></sup></label>
                 <div class="uk-form-controls">
-                    <div uk-grid>
-                        <div class="uk-width-1-3@m">
-                            <select class="uk-select" id="country-code" name="country-code">
-                                <?php                                
-                                foreach ($countries as $country) {
-                                    if (!empty($country['idd']['root'])) {
-                                        if ($country['name']['common'] === 'Indonesia') {
-                                            echo '<option value="'.ltrim($country['idd']['root'], $country['idd']['root'][0]).implode($country['idd']['suffixes']).'" selected>'.$country['idd']['root'].implode($country['idd']['suffixes']).' '.$country['name']['common'].'</option>';
-                                        } elseif (count($country['idd']['suffixes']) > 1) {
-                                            echo '<option value="'.ltrim($country['idd']['root'], $country['idd']['root'][0]).'">'.$country['idd']['root'].' '.$country['name']['common'].'</option>';
-                                        } else {
-                                            echo '<option value="'.ltrim($country['idd']['root'], $country['idd']['root'][0]).implode($country['idd']['suffixes']).'">'.$country['idd']['root'].implode($country['idd']['suffixes']).' '.$country['name']['common'].'</option>';
-                                        }
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="uk-width-2-3@m">
-                            <input class="uk-input" type="tel" id="phone" name="phone"/>
-                        </div>
-                    </div>
-                    <div class="uk-margin-small uk-text-meta">Current number is +<?=$user->phone?></div>
+                    <input class="uk-input" type="tel" id="phone" name="phone" value="<?=$user->phone?>" required/>
+                    <div class="uk-margin-small uk-text-meta"><?=lang('Global.phoneInst')?></div>
                 </div>
             </div>
             <div class="uk-margin">

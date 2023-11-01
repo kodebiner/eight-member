@@ -158,20 +158,10 @@ class Auth extends BaseController
      */
     public function register()
     {
-
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, "https://restcountries.com/v3.1/all?fields=name,idd");
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $country = json_decode(curl_exec($curl), true);
-        $countrysort = array_column($country, 'name');
-        array_multisort($countrysort, SORT_ASC, $country);
-        curl_close($curl);
-
         $data                   = $this->data;
         $data['config']         = $this->config;
         $data['title']          = lang('Auth.register');
         $data['description']    = lang('Auth.register');
-        $data['countries']      = $country;
 
         // check if already logged in.
         if ($this->auth->check()) {
@@ -243,7 +233,7 @@ class Auth extends BaseController
 
         $user->generateMemberId();
 
-        $user->phone = $input['country-code'].$input['phone'];
+        $user->phone = $input['phone'];
 
         $this->config->requireActivation === null ? $user->activate() : $user->generateActivateHash();
 
