@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use Myth\Auth\Models\GroupModel;
+
 class Home extends BaseController
 {
     public function index()
@@ -17,10 +19,9 @@ class Home extends BaseController
     public function trial()
     {
         $authorize = service('authorization');
-        $GroupUserModel = new \App\Models\GroupUserModel();
-
-        $authorize->removeUserFromGroup('6', '1');
-        $authorize->addUserToGroup('6', '2');
+        $authorize->updateGroup('3', 'manager', '');
+        $authorize->createGroup('staff', '');
+        $authorize->createGroup('personal trainer', '');
     }
 
     public function dashboard()
@@ -41,5 +42,13 @@ class Home extends BaseController
     public function migration()
     {
         echo command('migrate -all');
+    }
+
+    public function update()
+    {
+        $authorize = service('authorization');
+        $authorize->updateGroup('3', 'manager', '');
+        $authorize->createGroup('staff', '');
+        $authorize->createGroup('personal trainer', '');
     }
 }

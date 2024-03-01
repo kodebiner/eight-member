@@ -21,18 +21,20 @@
                     <div class="uk-h2 uk-margin-remove"><?=$user->username?></div>
                 </div>
             </div>
-            <div class="uk-margin">
-                <div class="uk-form-label"><?=lang('Global.phone')?></div>
-                <div class="uk-form-controls">
-                    <div class="uk-h2 uk-margin-remove">+<?=$user->phone?></div>
+            <?php if ($role === 'staff' || 'owner') { ?>
+                <div class="uk-margin">
+                    <div class="uk-form-label"><?=lang('Global.phone')?></div>
+                    <div class="uk-form-controls">
+                        <div class="uk-h2 uk-margin-remove">+<?=$user->phone?></div>
+                    </div>
                 </div>
-            </div>
-            <div class="uk-margin">
-                <div class="uk-form-label"><?=lang('Auth.email')?></div>
-                <div class="uk-form-controls">
-                    <div class="uk-h2 uk-margin-remove"><?=$user->email?></div>
+                <div class="uk-margin">
+                    <div class="uk-form-label"><?=lang('Auth.email')?></div>
+                    <div class="uk-form-controls">
+                        <div class="uk-h2 uk-margin-remove"><?=$user->email?></div>
+                    </div>
                 </div>
-            </div>
+            <?php } ?>
             <div class="uk-margin">
                 <div class="uk-form-label"><?=lang('Global.registerdate')?></div>
                 <div class="uk-form-controls">

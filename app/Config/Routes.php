@@ -71,16 +71,16 @@ $routes->group('', ['filter' => 'login'], function($routes) {
 
 // User/Member
 $routes->group('users', ['filter' => 'login'], function($routes) {
-    $routes->get('', 'Account::list', ['filter' => 'role:owner,staff']);
-    $routes->get('newmember', 'Account::newmember', ['filter' => 'role:owner,staff']);
-    $routes->post('create', 'Account::createmember', ['filter' => 'role:owner,staff']);
-    $routes->get('checkin', 'Account::checkin', ['filter' => 'role:owner,staff']);
-    $routes->post('checked', 'Account::checked', ['filter' => 'role:owner,staff']);
-    $routes->get('extend', 'Account::extend', ['filter' => 'role:owner,staff']);
-    $routes->post('extending', 'Account::extending', ['filter' => 'role:owner,staff']);
-    $routes->get('update/(:num)', 'Account::update/$1', ['filter' => 'role:owner,staff']);
-    $routes->post('updating', 'Account::updating', ['filter' => 'role:owner,staff']);
-    $routes->post('delete', 'Account::delete', ['filter' => 'role:owner,staff']);
+    $routes->get('', 'Account::list', ['filter' => 'role:owner,manager,staff']);
+    $routes->get('newmember', 'Account::newmember', ['filter' => 'role:owner,manager,staff']);
+    $routes->post('create', 'Account::createmember', ['filter' => 'role:owner,manager,staff']);
+    $routes->get('checkin', 'Account::checkin', ['filter' => 'role:owner,manager,staff']);
+    $routes->post('checked', 'Account::checked', ['filter' => 'role:owner,manager,staff']);
+    $routes->get('extend', 'Account::extend', ['filter' => 'role:owner,manager,staff']);
+    $routes->post('extending', 'Account::extending', ['filter' => 'role:owner,manager,staff']);
+    $routes->get('update/(:num)', 'Account::update/$1', ['filter' => 'role:owner,manager']);
+    $routes->post('updating', 'Account::updating', ['filter' => 'role:owner,manager']);
+    $routes->post('delete', 'Account::delete', ['filter' => 'role:owner,manager']);
 });
 
 // Report

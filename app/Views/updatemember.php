@@ -10,7 +10,7 @@
 <?= $this->section('main') ?>
 <form class="uk-form-horizontal" action="users/updating" method="post">
     <div class="uk-flex-between uk-chidl-width-auto" uk-grid>
-        <div><h1>Add New Member</h1></div>
+        <div><h1>Update New Member</h1></div>
         <div><button class="uk-button uk-button-large uk-button-primary" type="submit">Save</button></div>
     </div>
     <div class="uk-child-width-1-2@m" uk-grid>
@@ -46,8 +46,15 @@
                     <select class="uk-select" id="role" name="role" required>
                         <?php
                         foreach ($groups as $group) {
-                            if (($role === 'owner') && (($group->name === 'owner') || ($group->name === 'staff'))) {
-                                if (old('role', $userrole['group_id']) === $group->id) {
+                            if (($role === 'owner') && (($group->name === 'owner') || ($group->name === 'manager') || ($group->name === 'personal trainer') || ($group->name === 'staff'))) {
+                                if (old('role') === $group->id) {
+                                    $selected = 'selected';
+                                } else {
+                                    $selected = '';
+                                }
+                                echo '<option value="'.$group->id.'" '.$selected.'>'.$group->name.'</option>';
+                            } elseif (($role === 'manager') && (($group->name === 'staff') || ($group->name === 'personal trainer'))) {
+                                if (old('role') === $group->id) {
                                     $selected = 'selected';
                                 } else {
                                     $selected = '';

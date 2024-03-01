@@ -200,6 +200,9 @@
                 </div>
             </div>
         </div>
+        <?php
+        if ($role === 'owner' || 'manager') {
+        ?>
         <div class="uk-modal-footer">
             <div class="uk-child-width-auto uk-flex-center" uk-grid>
                 <div><a class="uk-button uk-button-secondary uk-text-uppercase" href="users/update/<?=$user->memberid?>"><?=lang('Global.edit')?></a></div>
@@ -208,6 +211,9 @@
                 </div>
             </div>
         </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
 <div class="uk-flex-top" id="delete-confirm-<?=$user->memberid?>" uk-modal="bg-close: false">

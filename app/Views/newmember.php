@@ -46,7 +46,14 @@
                     <select class="uk-select" id="role" name="role" required>
                         <?php
                         foreach ($groups as $group) {
-                            if (($role === 'owner') && (($group->name === 'owner') || ($group->name === 'staff'))) {
+                            if (($role === 'owner') && (($group->name === 'owner') || ($group->name === 'manager') || ($group->name === 'personal trainer') || ($group->name === 'staff'))) {
+                                if (old('role') === $group->id) {
+                                    $selected = 'selected';
+                                } else {
+                                    $selected = '';
+                                }
+                                echo '<option value="'.$group->id.'" '.$selected.'>'.$group->name.'</option>';
+                            } elseif (($role === 'manager') && (($group->name === 'staff') || ($group->name === 'personal trainer'))) {
                                 if (old('role') === $group->id) {
                                     $selected = 'selected';
                                 } else {
