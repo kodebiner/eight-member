@@ -22,6 +22,8 @@ class Home extends BaseController
         $authorize->updateGroup('3', 'manager', '');
         $authorize->createGroup('staff', '');
         $authorize->createGroup('personal trainer', '');
+
+        echo command('migrate --all');
     }
 
     public function dashboard()

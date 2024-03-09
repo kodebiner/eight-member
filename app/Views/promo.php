@@ -3,13 +3,13 @@
 <?= $this->section('main') ?>
 <div class="uk-container uk-container-small">
 <div class="uk-flex uk-flex-right">
-    <a class="uk-button uk-button-primary" href="#newpromo" uk-toggle>+ <?=lang('Global.createPromo')?></a>
+    <a class="uk-button uk-button-primary" href="#newpromo" uk-toggle>+ <?=$create?></a>
 </div>
 <table class="uk-table uk-table-hover uk-table-striped uk-table-divider uk-table-middle">
     <thead>
         <tr>
             <th>No.</th>
-            <th><?=lang('Global.promoName')?></th>
+            <th><?=$name?></th>
             <th></th>
         </tr>
     </thead>
@@ -37,12 +37,12 @@
     <div class="uk-modal-dialog uk-margin-auto-vertical">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
-            <h3 class="uk-modal-title"><?=lang('Global.createPromo')?></h3>
+            <h3 class="uk-modal-title"><?=$create?></h3>
         </div>
         <form class="uk-form-horizontal" action="promo/create" method="post">
             <div class="uk-modal-body">
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="name"><?=lang('Global.promoName')?></label>
+                    <label class="uk-form-label" for="name"><?=$name?></label>
                     <div class="uk-form-controls">
                         <input class="uk-input" type="text" name="name" required />
                     </div>
@@ -59,12 +59,12 @@
     <div class="uk-modal-dialog uk-margin-auto-vertical">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
-            <h3 class="uk-modal-title"><?=lang('Global.editPromo')?></h3>
+            <h3 class="uk-modal-title"><?=$edit?></h3>
         </div>
         <form class="uk-form-horizontal" action="promo/update/<?=$promo['id']?>" method="post">
             <div class="uk-modal-body">
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="name"><?=lang('Global.promoName')?></label>
+                    <label class="uk-form-label" for="name"><?=$name?></label>
                     <div class="uk-form-controls">
                         <input class="uk-input" type="text" name="name" value="<?=$promo['name']?>" required />
                     </div>

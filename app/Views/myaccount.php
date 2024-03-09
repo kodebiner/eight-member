@@ -54,7 +54,7 @@
                                         <div class="tm-navbar-dropdown"><a href="myaccount" class="tm-navbar-preserve uk-link-reset"><span uk-icon="user"></span> <?=lang('Global.profile')?></a></div>
                                     </div>
                                     <div class="uk-margin">
-                                        <a class="uk-button tm-button-navbar" href="javascript:void(0)"><span uk-icon="sign-out"></span> <?=lang('Global.logout')?></a>
+                                    <a id="logout" class="uk-button uk-button-secondary"><span uk-icon="sign-out"></span> <?=lang('Global.logout')?></a>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                     <div class="uk-h4 uk-margin-remove"><?=$fullname?></div>
                     <div class="uk-h5 uk-margin-remove"><?=$role?></div>
                     <div class="uk-margin uk-text-center">
-                        <a class="uk-button tm-button-navbar" href="javascript:void(0)"><span uk-icon="sign-out"></span> <?=lang('Global.logout')?></a>
+                        <a id="logout" class="uk-button uk-button-secondary"><span uk-icon="sign-out"></span> <?=lang('Global.logout')?></a>
                     </div>
                 </div>
                 <hr class="uk-divider-icon">
@@ -123,6 +123,7 @@
                                 <label class="uk-form-label"><?=lang('Global.phone')?></label>
                                 <div class="uk-form-controls">
                                     <input class="uk-input" type="tel" value="+<?=$account->phone?>" disabled />
+                                    <div class="uk-margin-small uk-text-meta"><?=lang('Global.askStaff')?></div>
                                 </div>
                             </div>
                             <?php
@@ -206,5 +207,11 @@
                 </div>
             <?php } ?>
         </footer>
+        <script type="application/javascript">
+            document.getElementById('logout').addEventListener('click', logout);
+            function logout() {
+                location.href = 'logout';
+            }
+        </script>
     </body>
 </html>

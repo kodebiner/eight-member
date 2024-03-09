@@ -50,6 +50,7 @@ return [
     'selectPromo'       => 'Pilih promo',
     'phoneInst'         => 'Masukkan Kode Negara dan No Handphone tanpa simbol +. Misal, <b>6281328xxxxxx</b>',
     'phoneTooltip'      => 'No Handphone akan digunakan untuk mengirimkan membercard melalui Whatsapp',
+    'askStaff'          => 'Minta ke staff gym untuk memperbarui nomor telepon anda',
 
     // Button
     'manage'            => 'Kelola',
@@ -73,6 +74,7 @@ return [
     'updateMember'      => 'Perbarui Member',
     'checkinLog'        => 'Catatan Check-In',
     'promoList'         => 'Daftar Promo',
+    'categoryList'      => 'Daftar Kategori',
 
     // Description
     'dashdesc'          => 'Informasi global mengenai bisnis anda',
@@ -84,6 +86,7 @@ return [
     'updateMemberDesc'  => 'Formulir untuk memperbarui informasi member',
     'checkinLogDesc'    => 'Catatan check-in member',
     'promoListDesc'     => 'Daftar semua promo yang ada',
+    'categoryListDesc'  => 'Daftar semua kategori yang ada',
 
     // Messages
     'emailNotes'        => '* Email ini dikirim secara otomatis. Jangan membalas email ini.',

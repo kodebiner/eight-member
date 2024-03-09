@@ -7,6 +7,7 @@ use App\Models\GroupUserModel;
 use Myth\Auth\Models\GroupModel;
 use App\Models\CheckinModel;
 use App\Models\PromoModel;
+use App\Models\MemberCategoryModel;
 use App\Models\ActivityModel;
 
 class Account extends BaseController
@@ -181,14 +182,16 @@ class Account extends BaseController
 
         // Populating Data
         $input = $this->request->getGet();
-
-        $builder = $UserModel->builder();
         
         if (isset($input['sort'])) {
             $sort = $input['sort'];
         } else {
             $sort = 10;
         }
+
+        $excludeRole = [];
+        $owners = $GroupUserModel->where('group_id', '2')->find();
+        $managers = $GroupUserModel->where('group_id', '3')->find();
 
         if ((isset($input['role'])) && ($input['role'] != '0') && (empty($input['search']))) {
             $userids = array();
@@ -218,14 +221,41 @@ class Account extends BaseController
                 $users = $UserModel->where('id', '0')->paginate($sort, 'users');
             }
         } elseif (((empty($input['role'])) || ($input['role'] === '0')) && (isset($input['search']) && !empty($input['search']))) {
-            $searchArr = [
-                'firstname'     => $input['search'],
-                'lastname'      => $input['search'],
-                'username'      => $input['search']
-            ];
-            $users = $UserModel->where('firstname', $input['search'])->orWhere('lastname', $input['search'])->orWhere('username', $input['search'])->paginate($sort, 'users');
+            if ($this->data['role'] === 'manager') {
+                foreach ($owners as $owner) {
+                    $excludeRole[] = $owner['user_id'];
+                }
+            } elseif ($this->data['role'] === 'staff') {
+                foreach ($owners as $owner) {
+                    $excludeRole[] = $owner['user_id'];
+                }
+                foreach ($managers as $manager) {
+                    $excludeRole[] = $manager['user_id'];
+                }
+            }
+            if (empty($excludeRole)) {
+                $users = $UserModel->where('firstname', $input['search'])->orWhere('lastname', $input['search'])->orWhere('username', $input['search'])->paginate($sort, 'users');
+            } else {
+                $users = $UserModel->where('firstname', $input['search'])->orWhere('lastname', $input['search'])->orWhere('username', $input['search'])->whereNotIn('id', $excludeRole)->paginate($sort, 'users');
+            }
         } else {
-            $users = $UserModel->paginate($sort, 'users');
+            if ($this->data['role'] === 'manager') {
+                foreach ($owners as $owner) {
+                    $excludeRole[] = $owner['user_id'];
+                }
+            } elseif ($this->data['role'] === 'staff') {
+                foreach ($owners as $owner) {
+                    $excludeRole[] = $owner['user_id'];
+                }
+                foreach ($managers as $manager) {
+                    $excludeRole[] = $manager['user_id'];
+                }
+            }
+            if (empty($excludeRole)) {
+                $users = $UserModel->paginate($sort, 'users');
+            } else {
+                $users = $UserModel->whereNotIn('id', $excludeRole)->paginate($sort, 'users');
+            }
         }
 
         if (isset($input['role'])) {
@@ -277,6 +307,7 @@ class Account extends BaseController
         $authorize = service('authorization');
         
         // Calling Models & Entities
+        // $UpdateUser = new \App\Entities\User();
         $UserModel = new UserModel();
         $GroupUserModel = new GroupUserModel();
         $ActivityModel = new ActivityModel();
@@ -284,17 +315,20 @@ class Account extends BaseController
         // Populating Data
         $input = $this->request->getPost();
         $user = $UserModel->where('memberid', $input['memberid'])->first();
+        $UpdateUser = $UserModel->find($user->id);
         $group = $GroupUserModel->where('user_id', $user->id)->first();
 
         // Validating Input Data
         $rules = [
             'firstname'     => 'required',
             'lastname'      => 'required',
-            'email'         => 'required|valid_email',
             'role'          => 'required',
-            'expire'        => 'required',
-            'photo'         => 'required'
+            'expire'        => 'required'
         ];
+
+        if (!empty($input['email'])) {
+            $rules['email'] = 'valid_email';
+        }
 
         if (!empty($input['phone'])) {
             $rules['phone'] = 'numeric';
@@ -305,17 +339,59 @@ class Account extends BaseController
         }
 
         // Saving Member Data
-        $user->firstname    = $input['firstname'];
-        $user->lastname     = $input['lastname'];
-        $user->email        = $input['email'];
-        $user->expired_at   = date('Y-m-d H:i:s', strtotime($input['expire']));
-        $user->photo        = $input['photo'];
+        $UpdateUser->firstname      = $input['firstname'];
+        $UpdateUser->lastname       = $input['lastname'];
+        $UpdateUser->expired_at     = date('Y-m-d H:i:s', strtotime($input['expire']));
 
-        if (!empty($input['phone'])) {
-            $user->phone = $input['phone'];
+        if (!empty($input['email'])) {
+            $UpdateUser->email = $input['email'];
         }
 
-        $UserModel->save($user);
+        if (!empty($input['phone'])) {
+            $UpdateUser->phone = $input['phone'];
+        }
+
+        $compareForm = [
+            'firstname'     => $input['firstname'],
+            'lastname'      => $input['lastname'],
+            'expire'        => date('Y-m-d H:i:s', strtotime($input['expire'])),
+        ];
+        if (!empty($input['email'])) {
+            $compareForm['email'] = $input['email'];
+        }
+        if (!empty($input['phone'])) {
+            $compareForm['phone'] = $input['phone'];
+        }
+
+        $compareUser = [
+            'firstname'     => $user->firstname,
+            'lastname'      => $user->lastname,
+            'expire'        => $user->expired_at,
+        ];
+        if (!empty($input['email'])) {
+            $compareUser['email'] = $user->email;
+        }
+        if (!empty($input['phone'])) {
+            $compareUser['phone'] = $user->phone;
+        }
+
+        $formDiff = array_diff($compareForm,$compareUser);
+
+        if (!empty($input['photo'])) {
+            $image_parts = explode(";base64,", $input['photo']);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName = $user->memberid.'-photo.jpg';
+            $file = FCPATH.'/images/member/'.$fileName;
+            file_put_contents($file, $image_base64);
+
+            $UpdateUser->photo = $fileName;
+        }
+
+        if (!empty($formDiff)) {
+            $UserModel->save($UpdateUser);
+        }
         
         // Asign Member to New Group
         $authorize->removeUserFromGroup($user->id, $group['group_id']);
@@ -496,5 +572,22 @@ class Account extends BaseController
 
         // Redirecting
         return redirect()->to('dashboard')->with('message', lang('Global.memberExtended'));
+    }
+
+    public function category()
+    {
+        // Calling Models $ Services
+        $pager                  = \Config\Services::pager();
+        $MemberCategoryModel    = new MemberCategoryModel();
+
+        // Parsing Data to View
+        $data                   = $this->data;
+        $data['title']          = lang('Global.categoryList');
+        $data['description']    = lang('Global.categoryListDesc');
+        $data['promos']         = $MemberCategoryModel->paginate(10, 'promos');
+        $data['pager']          = $MemberCategoryModel->pager;
+
+        // Rendering View
+        return view('promo', $data);
     }
 }

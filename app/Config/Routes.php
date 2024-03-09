@@ -78,8 +78,8 @@ $routes->group('users', ['filter' => 'login'], function($routes) {
     $routes->post('checked', 'Account::checked', ['filter' => 'role:owner,manager,staff']);
     $routes->get('extend', 'Account::extend', ['filter' => 'role:owner,manager,staff']);
     $routes->post('extending', 'Account::extending', ['filter' => 'role:owner,manager,staff']);
-    $routes->get('update/(:num)', 'Account::update/$1', ['filter' => 'role:owner,manager']);
-    $routes->post('updating', 'Account::updating', ['filter' => 'role:owner,manager']);
+    $routes->get('update/(:num)', 'Account::update/$1', ['filter' => 'role:owner,manager,staff']);
+    $routes->post('updating', 'Account::updating', ['filter' => 'role:owner,manager,staff']);
     $routes->post('delete', 'Account::delete', ['filter' => 'role:owner,manager']);
 });
 

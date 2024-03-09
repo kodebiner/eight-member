@@ -19,6 +19,10 @@ class Promo extends BaseController
         $data['description']    = lang('Global.promoListDesc');
         $data['promos']         = $PromoModel->paginate(10, 'promos');
         $data['pager']          = $PromoModel->pager;
+        $data['name']           = lang('Global.promoName');
+        $data['create']         = lang('Global.createPromo');
+        $data['edit']           = lang('Global.editPromo');
+        $data['delete']         = lang('Global.deletePromo');
 
         // Rendering View
         return view('promo', $data);

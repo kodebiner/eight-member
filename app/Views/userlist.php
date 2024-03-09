@@ -12,9 +12,15 @@
                 <div>
                     <select class="uk-select uk-form-width-small" id="role" name="role">
                         <option value='0' <?=(empty($input['role'])) ? 'selected' : ''?><?=($input['role'] === '0') ? 'selected' : ''?>><?=lang('Global.allRole')?></option>
-                        <?php foreach ($groups as $group) { ?>
+                        <?php
+                        foreach ($groups as $group) {
+                            if (($role === 'owner') || (($role === 'manager') && ($group->id != '2')) || (($role === 'staff') && ($group->id != '2') && ($group->id != '3'))) {
+                        ?>
                             <option value="<?=$group->id?>" <?=($input['role'] === $group->id) ? 'selected' : ''?>><?=$group->name?></option>
-                        <?php } ?>
+                        <?php
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="uk-inline">
@@ -86,8 +92,10 @@
             <tr>
                 <th>Memberid</th>
                 <th><?=lang('Global.fullname')?></th>
-                <th><?=lang('Global.phone')?></th>
-                <th><?=lang('Auth.email')?></th>
+                <?php if (($role === 'owner') || ($role === 'manager')) { ?>
+                    <th><?=lang('Global.phone')?></th>
+                    <th><?=lang('Auth.email')?></th>
+                <?php } ?>
                 <th class="uk-text-center"><?=lang('Global.subscription')?></th>
                 <th></th>
             </tr>
@@ -100,8 +108,10 @@
                 <tr>
                     <td><?=$user->memberid?></td>
                     <td><?=$user->firstname?> <?=$user->lastname?></td>
-                    <td><?=$user->phone?></td>
-                    <td><?=$user->email?></td>
+                    <?php if (($role === 'owner') || ($role === 'manager')) { ?>
+                        <td><?=$user->phone?></td>
+                        <td><?=$user->email?></td>
+                    <?php } ?>
                     <?php
                     $today = date('Y-m-d');
                     $expire = date('Y-m-d', strtotime($user->expired_at));
@@ -154,14 +164,16 @@
                         <label class="uk-form-label"><?=lang('Auth.username')?></label>
                         <div class="uk-form-controls uk-h3 uk-margin-remove"><?=$user->username?></div>
                     </div>
-                    <div class="uk-margin">
-                        <label class="uk-form-label"><?=lang('Global.phone')?></label>
-                        <div class="uk-form-controls uk-h3 uk-margin-remove">+<?=$user->phone?></div>
-                    </div>
-                    <div class="uk-margin">
-                        <label class="uk-form-label"><?=lang('Auth.email')?></label>
-                        <div class="uk-form-controls uk-h3 uk-margin-remove"><?=$user->email?></div>
-                    </div>
+                    <?php if (($role === 'owner') || ($role === 'manager')) { ?>
+                        <div class="uk-margin">
+                            <label class="uk-form-label"><?=lang('Global.phone')?></label>
+                            <div class="uk-form-controls uk-h3 uk-margin-remove">+<?=$user->phone?></div>
+                        </div>
+                        <div class="uk-margin">
+                            <label class="uk-form-label"><?=lang('Auth.email')?></label>
+                            <div class="uk-form-controls uk-h3 uk-margin-remove"><?=$user->email?></div>
+                        </div>
+                    <?php } ?>
                     <?php
                     if ($user->expired_at != null) {
                         $today = date('Y-m-d');
@@ -200,20 +212,16 @@
                 </div>
             </div>
         </div>
-        <?php
-        if ($role === 'owner' || 'manager') {
-        ?>
         <div class="uk-modal-footer">
             <div class="uk-child-width-auto uk-flex-center" uk-grid>
                 <div><a class="uk-button uk-button-secondary uk-text-uppercase" href="users/update/<?=$user->memberid?>"><?=lang('Global.edit')?></a></div>
-                <div>
-                    <a class="uk-button uk-button-primary uk-text-uppercase" href="#delete-confirm-<?=$user->memberid?>" uk-toggle><?=lang('Global.delete')?></a>
-                </div>
+                <?php if (($role === 'owner') || ($role === 'manager')) { ?>
+                    <div>
+                        <a class="uk-button uk-button-primary uk-text-uppercase" href="#delete-confirm-<?=$user->memberid?>" uk-toggle><?=lang('Global.delete')?></a>
+                    </div>
+                <?php } ?>
             </div>
         </div>
-        <?php
-        }
-        ?>
     </div>
 </div>
 <div class="uk-flex-top" id="delete-confirm-<?=$user->memberid?>" uk-modal="bg-close: false">

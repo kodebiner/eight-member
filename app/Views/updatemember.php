@@ -27,16 +27,25 @@
                     <input class="uk-input" type="text" id="lastname" name="lastname" value="<?=old('lastname', $user->lastname)?>" required/>
                 </div>
             </div>
+            <?php
+            if (($role === 'owner') || ($role === 'manager')) {
+                $emailValue = $user->email;
+                $phoneValue = $user->phone;
+            } else {
+                $emailValue = '';
+                $phoneValue = '';
+            }
+            ?>
             <div class="uk-margin">
                 <label class="uk-form-label" for="email"><?=lang('Auth.email')?></label>
                 <div class="uk-form-controls">
-                    <input class="uk-input" type="email" id="email" name="email" value="<?=old('email', $user->email)?>" required/>
+                    <input class="uk-input" type="email" id="email" name="email" value="<?=old('email', $emailValue)?>"/>
                 </div>
             </div>
             <div class="uk-margin">
                 <label class="uk-form-label" for="phone"><?=lang('Global.phone')?> <sup uk-icon="icon: question; ratio: 0.5;" uk-tooltip="<?=lang('Global.phoneTooltip')?>"></sup></label>
                 <div class="uk-form-controls">
-                    <input class="uk-input" type="tel" id="phone" name="phone" value="<?=$user->phone?>" required/>
+                    <input class="uk-input" type="tel" id="phone" name="phone" value="<?=$phoneValue?>"/>
                     <div class="uk-margin-small uk-text-meta"><?=lang('Global.phoneInst')?></div>
                 </div>
             </div>
@@ -46,22 +55,19 @@
                     <select class="uk-select" id="role" name="role" required>
                         <?php
                         foreach ($groups as $group) {
+                            if (old('role', $userrole['group_id']) === $group->id) {
+                                $selected = 'selected';
+                            } else {
+                                $selected = '';
+                            }
                             if (($role === 'owner') && (($group->name === 'owner') || ($group->name === 'manager') || ($group->name === 'personal trainer') || ($group->name === 'staff'))) {
-                                if (old('role') === $group->id) {
-                                    $selected = 'selected';
-                                } else {
-                                    $selected = '';
-                                }
                                 echo '<option value="'.$group->id.'" '.$selected.'>'.$group->name.'</option>';
                             } elseif (($role === 'manager') && (($group->name === 'staff') || ($group->name === 'personal trainer'))) {
-                                if (old('role') === $group->id) {
-                                    $selected = 'selected';
-                                } else {
-                                    $selected = '';
-                                }
+                                echo '<option value="'.$group->id.'" '.$selected.'>'.$group->name.'</option>';
+                            } elseif (($role === 'staff') && ($group->name === 'personal trainer')) {
                                 echo '<option value="'.$group->id.'" '.$selected.'>'.$group->name.'</option>';
                             } elseif ($group->name === 'member') {
-                                echo '<option value="'.$group->id.'" selected>'.$group->name.'</option>';
+                                echo '<option value="'.$group->id.'" '.$selected.'>'.$group->name.'</option>';
                             } 
                         }
                         ?>
@@ -79,7 +85,7 @@
             </div>
             <div class="uk-flex uk-flex-center uk-margin">
                 <input id="memberid" name="memberid" value="<?=$user->memberid?>" hidden />
-                <input id="photo" name="photo" value="<?=old('photo', $user->photo)?>" hidden />
+                <input id="photo" name="photo" hidden />
                 <div id="camera"></div>
             </div>
             <div class="uk-flex uk-flex-center uk-margin">
@@ -90,10 +96,8 @@
             <div class="uk-flex uk-flex-center uk-margin">
                 <div id="snapshot">
                     <?php
-                    if (old('photo') != null) {
-                        echo '<img class="uk-width-1-1" src="'.old('photo').'" />';
-                    } elseif ($user->photo != null) {
-                        echo '<img class="uk-width-1-1" src="images/member/'.$user->photo.'" />';
+                    if (old('photo', $user->photo) != null) {
+                        echo '<img class="uk-width-1-1" src="images/member/'.old('photo', $user->photo).'" />';
                     }
                     ?>
                 </div> 
@@ -119,6 +123,7 @@
             function takesnapshot() {
                 Webcam.snap( function(data_uri) {
                     $("#photo").val(data_uri);
+                    console.log($("#photo").val());
                     document.getElementById('snapshot').innerHTML = '<img class="uk-width-1-1" src="'+data_uri+'"/>';
                 });
             }

@@ -50,6 +50,7 @@ return [
     'selectPromo'       => 'Select a promo',
     'phoneInst'         => 'Input Country Code and Phone Number without + symbol. Eg. <b>6281328xxxxxx</b>',
     'phoneTooltip'      => 'Phone Number will be use to send membercard via Whatsapp',
+    'askStaff'          => 'Ask the gym staff to update your phone number',
 
     // Button
     'manage'            => 'Manage',
@@ -73,6 +74,7 @@ return [
     'updateMember'      => 'Update Member',
     'checkinLog'        => 'Check-In Log',
     'promoList'         => 'Promo List',
+    'categoryList'      => 'Category List',
 
     // Description
     'dashdesc'          => 'Global information about your business',
@@ -84,6 +86,7 @@ return [
     'updateMemberDesc'  => 'Form to update member information',
     'checkinLogDesc'    => 'Log of checked-in member',
     'promoListDesc'     => 'List of all promo(s)',
+    'categoryListDesc'  => 'List of all categories',
 
     // Messages
     'emailNotes'        => '* This email sent automatically. Do not reply to this email.',
