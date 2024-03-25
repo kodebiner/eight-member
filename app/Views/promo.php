@@ -39,7 +39,7 @@
         <div class="uk-modal-header">
             <h3 class="uk-modal-title"><?=$create?></h3>
         </div>
-        <form class="uk-form-horizontal" action="promo/create" method="post">
+        <form class="uk-form-horizontal" action="<?=$createAction?>" method="post">
             <div class="uk-modal-body">
                 <div class="uk-margin">
                     <label class="uk-form-label" for="name"><?=$name?></label>
@@ -61,7 +61,7 @@
         <div class="uk-modal-header">
             <h3 class="uk-modal-title"><?=$edit?></h3>
         </div>
-        <form class="uk-form-horizontal" action="promo/update/<?=$promo['id']?>" method="post">
+        <form class="uk-form-horizontal" action="<?=$editAction?>/<?=$promo['id']?>" method="post">
             <div class="uk-modal-body">
                 <div class="uk-margin">
                     <label class="uk-form-label" for="name"><?=$name?></label>
@@ -81,7 +81,7 @@
         <div class="uk-modal-header">
             <h3 class="uk-modal-title"><?=lang('Global.areYouSure')?></h3>
         </div>
-        <form class="uk-form-horizontal" action="promo/delete" method="post">
+        <form class="uk-form-horizontal" action="<?=$deleteAction?>" method="post">
             <input name="promoid" value="<?=$promo['id']?>" hidden />
             <div class="uk-modal-body">
                 <div class="uk-child-width-auto uk-flex-center" uk-grid>

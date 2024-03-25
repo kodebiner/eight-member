@@ -81,11 +81,15 @@ $routes->group('users', ['filter' => 'login'], function($routes) {
     $routes->get('update/(:num)', 'Account::update/$1', ['filter' => 'role:owner,manager,staff']);
     $routes->post('updating', 'Account::updating', ['filter' => 'role:owner,manager,staff']);
     $routes->post('delete', 'Account::delete', ['filter' => 'role:owner,manager']);
+    $routes->get('category', 'Account::category', ['filter' => 'role:owner,manager,staff']);
+    $routes->post('category/create', 'Account::createcat', ['filter' => 'role:owner,manager,staff']);
+    $routes->post('category/update/(:num)', 'Account::updatecat/$1', ['filter' => 'role:owner,manager,staff']);
+    $routes->post('category/delete', 'Account::deletecat', ['filter' => 'role:owner,manager,staff']);
 });
 
 // Report
 $routes->group('report', ['filter' => 'login'], function($routes) {
-    $routes->get('checkin', 'Report::checkin', ['filter' => 'role:owner,staff']);
+    $routes->get('checkin', 'Report::checkin', ['filter' => 'role:owner,manager,staff,personal trainer']);
 });
 
 // Promo

@@ -24,6 +24,7 @@
                     <ul class="uk-nav-sub">
                         <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'newmember')) ? 'uk-active' : ''?>"><a href="users/newmember">+ <?=lang('Global.newMember')?></a></li>
                         <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === '')) ? 'uk-active' : ''?>"><a href="users"><?=lang('Global.memberList')?></a></li>
+                        <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'category')) ? 'uk-active' : ''?>"><a href="users/category"><?=lang('Global.memberCategory')?></a></li>
                         <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'extend')) ? 'uk-active' : ''?>"><a href="users/extend"><?=lang('Global.extend')?></a></li>
                         <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'checkin')) ? 'uk-active' : ''?>"><a href="users/checkin"><?=lang('Global.checkIn')?></a></li>
                     </ul>
@@ -44,6 +45,7 @@
                 <ul class="uk-nav-sub">
                     <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'newmember')) ? 'uk-active' : ''?>"><a href="users/newmember">+ <?=lang('Global.newMember')?></a></li>
                     <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === '')) ? 'uk-active' : ''?>"><a href="users"><?=lang('Global.memberList')?></a></li>
+                    <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'category')) ? 'uk-active' : ''?>"><a href="users/category"><?=lang('Global.memberCategory')?></a></li>
                     <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'extend')) ? 'uk-active' : ''?>"><a href="users/extend"><?=lang('Global.extend')?></a></li>
                     <li class="<?=(($uri->getSegment(1) === 'users') && ($uri->getSegment(2) === 'checkin')) ? 'uk-active' : ''?>"><a href="users/checkin"><?=lang('Global.checkIn')?></a></li>
                 </ul>

@@ -21,6 +21,25 @@
                     <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
                     <input class="uk-input uk-form-width-small" type="text" id="enddate" name="enddate" value="<?=$input['enddate']?>" placeholder="<?=lang('Global.to')?>" />
                 </div>
+                <?php if ($role != 'personal trainer') { ?>
+                <div>
+                    <select class="uk-select" id="pt" name="pt">
+                        <option value="" <?= (empty($input['pt'])) ? 'selected' : '' ?>>Personal Trainer</option>
+                        <option value="">All</option>
+                        <option value="nopt" <?= ($input['pt'] === 'nopt') ? 'selected' : '' ?>><?=lang('Global.noPT')?></option>
+                        <?php
+                        foreach ($pts as $ptid => $ptname) {
+                            if ($input['pt'] === $ptid) {
+                                $selected = 'selected';
+                            } else {
+                                $selected = '';
+                            }
+                            echo '<option value="'.$ptid.'" '.$selected.'>'.$ptname.'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <?php } ?>
                 <div><button class="uk-button uk-button-primary" id="submit" type="submit"><?=lang('Global.search')?></button></div>
             </div>
         </div>
@@ -62,6 +81,7 @@
             <tr>
                 <th>Member</th>
                 <th>Check-In Time</th>
+                <th>Personal Trainer</th>
             </tr>
         </thead>
         <tbody>
@@ -77,6 +97,15 @@
                         ?>
                     </td>
                     <td><?=$checkin['checked_at']?></td>
+                    <td>
+                        <?php
+                        if ($checkin['pt'] === '0') {
+                            echo lang('Global.noPT');
+                        } else {
+                            echo $pts[$checkin['pt']];
+                        }
+                        ?>
+                    </td>
                 </tr>
             <?php } ?>
             <tr>

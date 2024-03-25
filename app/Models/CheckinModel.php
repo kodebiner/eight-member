@@ -5,7 +5,7 @@ use CodeIgniter\Model;
 class CheckinModel extends Model
 {
     protected $allowedFields = [
-        'user_id', 'checked_at',
+        'user_id', 'pt', 'checked_at',
     ];
 
     protected $table      = 'checkin';

@@ -21,8 +21,11 @@ class Promo extends BaseController
         $data['pager']          = $PromoModel->pager;
         $data['name']           = lang('Global.promoName');
         $data['create']         = lang('Global.createPromo');
+        $data['createAction']   = 'promo/create';
         $data['edit']           = lang('Global.editPromo');
+        $data['editAction']     = 'promo/update';
         $data['delete']         = lang('Global.deletePromo');
+        $data['deleteAction']   = 'promo/delete';
 
         // Rendering View
         return view('promo', $data);

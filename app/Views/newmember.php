@@ -69,6 +69,19 @@
                 </div>
             </div>
             <div class="uk-margin">
+                <label class="uk-form-label" for="category"><?=lang('Global.memberCategory')?></label>
+                <div class="uk-form-controls">
+                    <select class="uk-select" id="category" name="category" required>
+                        <option value="0" selected>Regular</option>
+                        <?php
+                        foreach ($categories as $category) {
+                            echo '<option value="'.$category['id'].'">'.$category['name'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="uk-margin">
                 <label class="uk-form-label" for="expire"><?=lang('Global.subscription')?></label>
                 <div class="uk-form-controls">
                     <div class="uk-inline">

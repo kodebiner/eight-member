@@ -11,4 +11,16 @@ class UserModel extends MythModel
     ];
 
     protected $returnType = 'App\Entities\User';
+
+    // Get Personal Trainer
+    public function getPT()
+    {
+        $groupsUsers = $this->db->table('auth_groups_users')->where('group_id', 5)->get()->getResult();
+        $usersid = [];
+        foreach ($groupsUsers as $groupUser) {
+            $usersid[] = $groupUser->user_id;
+        }
+        $pt = $this->db->table('users')->whereIn('id', $usersid)->get()->getResult();
+        return $pt;
+    }
 }

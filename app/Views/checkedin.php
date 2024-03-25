@@ -1,4 +1,8 @@
 <?= $this->extend('layout') ?>
+<?= $this->section('pageStyles') ?>
+<script src="js/jquery.min.js"></script>
+<?= $this->endSection() ?>
+
 <?= $this->section('main') ?>
 <?php if (!empty($user)) { ?>
     <div class="uk-margin uk-child-width-1-2@m uk-grid-divider" uk-grid>
@@ -83,6 +87,25 @@
                 </div>
             </div>
             <?php } ?>
+            <div class="uk-margin">
+                <div class="uk-form-label"><?=lang('Global.memberCategory')?></div>
+                <div class="uk-form-controls">
+                    <div class="uk-h2 uk-margin-remove"><?=$category?></div>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <div class="uk-form-label" for="pt">Personal Trainer</div>
+                <div class="uk-form-controls">
+                    <select class="uk-select" id="inputpt" name="inputpt">
+                        <option value="0" selected><?=lang('Global.noPT')?></option>
+                        <?php
+                        foreach ($pt as $pt) {
+                            echo '<option value="'.$pt->id.'">'.$pt->firstname.' '.$pt->lastname.'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
         </div>
         <div>
             <?php if (isset($user->photo)) { ?>
@@ -122,6 +145,7 @@
     <div class="uk-margin-large uk-text-center">
         <form action="users/checked" method="post">
             <input name="id" value="<?=$user->id?>" hidden />
+            <input id="pt" name="pt" value="0" hidden />
             <button class="uk-button uk-button-primary uk-button-large" type="submit" <?=$disable?>><span class="uk-h1 uk-margin-remove" style="color:<?=$color?>;">Check In</span></button>
         </form>
     </div>
@@ -132,4 +156,9 @@
         </div>
     </div>    
 <?php } ?>
+<script>
+    $('#inputpt').change(function() {
+        $('#pt').val($('#inputpt').val());
+    });
+</script>
 <?= $this->endSection() ?>

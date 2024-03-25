@@ -75,6 +75,31 @@
                 </div>
             </div>
             <div class="uk-margin">
+                <label class="uk-form-label" for="category"><?=lang('Global.memberCategory')?></label>
+                <div class="uk-form-controls">
+                    <select class="uk-select" id="category" name="category" required>
+                        <?php
+                        if ($user->category_id === '0') {
+                            $regSelect = 'selected';
+                        } else {
+                            $regSelect = '';
+                        }
+                        ?>
+                        <option value="0" <?=$regSelect?>>Regular</option>
+                        <?php
+                        foreach ($categories as $category) {
+                            if ($user->category_id === $category['id']) {
+                                $catSelect = 'selected';
+                            } else {
+                                $catSelect = '';
+                            }
+                            echo '<option value="'.$category['id'].'" '.$catSelect.'>'.$category['name'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="uk-margin">
                 <label class="uk-form-label" for="expire"><?=lang('Global.subscription')?></label>
                 <div class="uk-form-controls">
                     <div class="uk-inline">

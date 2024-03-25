@@ -64,16 +64,15 @@ class Account extends BaseController
     public function newmember()
     {
         // Calling Model
-        $GroupModel = new GroupModel();
-
-        // Populating Data
-        $groups = $GroupModel->findAll();
+        $GroupModel             = new GroupModel();
+        $MemberCategoryModel    = new MemberCategoryModel();
 
         // Parsing Data to View
         $data                   = $this->data;
         $data['title']          = lang('Global.newMember');
         $data['description']    = lang('Global.newMemberDesc');
-        $data['groups']         = $groups;
+        $data['groups']         = $GroupModel->findAll();
+        $data['categories']     = $MemberCategoryModel->findAll();
 
         // Rendering View
         return view('newmember', $data);
@@ -99,6 +98,7 @@ class Account extends BaseController
             'email'         => 'required|valid_email|is_unique[users.email]',
             'phone'         => 'required|numeric',
             'role'          => 'required',
+            'category'      => 'required',
             'expire'        => 'required',
             'photo'         => 'required'
         ];
@@ -113,6 +113,7 @@ class Account extends BaseController
         $newMember->lastname    = $input['lastname'];
         $newMember->email       = $input['email'];
         $newMember->phone       = $input['phone'];
+        $newMember->category_id = $input['category'];
         $newMember->expired_at  = date('Y-m-d H:i:s', strtotime($input['expire']));
 
         $n = 16;
@@ -176,9 +177,10 @@ class Account extends BaseController
         $pager = \Config\Services::pager();
 
         // Calling Models
-        $UserModel          = new UserModel();
-        $GroupUserModel     = new GroupUserModel();
-        $GroupModel         = new GroupModel();
+        $UserModel              = new UserModel();
+        $GroupUserModel         = new GroupUserModel();
+        $GroupModel             = new GroupModel();
+        $MemberCategoryModel    = new MemberCategoryModel();
 
         // Populating Data
         $input = $this->request->getGet();
@@ -268,11 +270,18 @@ class Account extends BaseController
             ];
         }
 
+        $cat = $MemberCategoryModel->findAll();
+        $category = [];
+        foreach ($cat as $cat) {
+            $category[$cat['id']] = $cat['name'];
+        }
+
         $data                   = $this->data;
         $data['title']          = lang('Global.memberList');
         $data['description']    = lang('Global.memberListDesc');
         $data['users']          = $users;
         $data['groups']         = $GroupModel->findAll();
+        $data['category']       = $category;
         $data['pager']          = $UserModel->pager;
         $data['input']          = $dispInput;
 
@@ -285,6 +294,7 @@ class Account extends BaseController
         $UserModel = new UserModel();
         $GroupModel = new GroupModel();
         $GroupUserModel = new GroupUserModel();
+        $MemberCategoryModel = new MemberCategoryModel();
 
         // Populating Data
         $user = $UserModel->where('memberid', $memberid)->first();
@@ -296,6 +306,7 @@ class Account extends BaseController
         $data['user']           = $user;
         $data['userrole']       = $GroupUserModel->where('user_id', $user->id)->first();
         $data['groups']         = $GroupModel->findAll();
+        $data['categories']     = $MemberCategoryModel->findAll();
 
         // Rendering View
         return view('updatemember', $data);
@@ -442,6 +453,7 @@ class Account extends BaseController
         // Calling Model
         $UserModel = new UserModel();
         $PromoModel = new PromoModel();
+        $MemberCategoryModel = new MemberCategoryModel();
 
         // Populating Data
         $input = $this->request->getGet('memberid');
@@ -452,8 +464,15 @@ class Account extends BaseController
                 if ($user->photo === null) {
                     $session->setTempdata('error', lang('Global.noPhotoCheckIn'), 5);
                 }
+                $category = $MemberCategoryModel->find($member->category_id);
+                if (!empty($category)) {
+                    $catName = $category['name'];
+                } else {
+                    $catName = 'Regular';
+                }
             } else {
                 $member = '';
+                $catName = 'Regular';
             }
         }
 
@@ -464,6 +483,8 @@ class Account extends BaseController
         if (isset($input)) {
             $data['user']       = $member;
             $data['userpromo']  = $PromoModel->getUserPromo($member->id);
+            $data['category']   = $catName;
+            $data['pt']         = $UserModel->getPT();
         };        
         $data['promos']         = $PromoModel->withDeleted()->findAll();
 
@@ -483,12 +504,13 @@ class Account extends BaseController
         $ActivityModel = new ActivityModel();
 
         // Populating Data
-        $input = $this->request->getPost('id');
-        $user = $UserModel->find($input);
+        $input = $this->request->getPost();
+        $user = $UserModel->find($input['id']);
 
         // Saving Data
         $fields = [
-            'user_id'       => $input,
+            'user_id'       => $input['id'],
+            'pt'            => $input['pt'],
             'checked_at'    => date('Y-m-d H:i:s')
         ];
         $CheckinModel->save($fields);
@@ -586,8 +608,94 @@ class Account extends BaseController
         $data['description']    = lang('Global.categoryListDesc');
         $data['promos']         = $MemberCategoryModel->paginate(10, 'promos');
         $data['pager']          = $MemberCategoryModel->pager;
+        $data['name']           = lang('Global.categoryName');
+        $data['create']         = lang('Global.createCategory');
+        $data['createAction']   = 'users/category/create';
+        $data['edit']           = lang('Global.editCategory');
+        $data['editAction']     = 'users/category/update';
+        $data['delete']         = lang('Global.deleteCategory');
+        $data['deleteAction']   = 'users/category/delete';
 
         // Rendering View
         return view('promo', $data);
+    }
+
+    public function createcat()
+    {
+        // Calling Models
+        $MemberCategoryModel    = new MemberCategoryModel();
+        $ActivityModel          = new ActivityModel();
+
+        // Populating Data
+        $input = $this->request->getPost('name');
+
+        // Creating Promo
+        $promo = ['name' => $input];
+        $MemberCategoryModel->save($promo);
+
+        // Recording Activity
+        $activity = [
+            'user_id'   => $this->data['uid'],
+            'activity'  => 'Adding member category '.$input,
+            'done_at'   => date('Y-m-d H:i:s')
+        ];
+        $ActivityModel->save($activity);
+
+        // Redirecting
+        return redirect()->back()->with('message', lang('Global.categoryAdded'));
+    }
+
+    public function updatecat($id)
+    {
+        // Calling Models
+        $MemberCategoryModel    = new MemberCategoryModel();
+        $ActivityModel          = new ActivityModel();
+
+        // Populating Data
+        $input = $this->request->getPost('name');
+        $promo = $MemberCategoryModel->find($id);
+
+        // Recording Activity
+        $activity = [
+            'user_id'   => $this->data['uid'],
+            'activity'  => 'Updating category '.$promo['name'],
+            'done_at'   => date('Y-m-d H:i:s')
+        ];
+        $ActivityModel->save($activity);
+
+        // Updating Data
+        $update = [
+            'id'        => $id,
+            'name'      => $input
+        ];
+        $MemberCategoryModel->save($update);
+
+        // Redirecting
+        return redirect()->back()->with('message', lang('Global.categoryUpdated'));
+    }
+
+    public function deletecat()
+    {
+        // Calling Models
+        $MemberCategoryModel    = new MemberCategoryModel();
+        $ActivityModel          = new ActivityModel();
+
+        // Populating Data
+        $input = $this->request->getPost('promoid');
+        $promo = $MemberCategoryModel->find($input);
+
+        // Recording Activity
+        $activity = [
+            'user_id'   => $this->data['uid'],
+            'activity'  => 'Deleting member category '.$promo['name'],
+            'done_at'   => date('Y-m-d H:i:s')
+        ];
+        $ActivityModel->save($activity);
+
+        // Delete Data
+        $MemberCategoryModel->delete($input);
+
+        // Redirect
+        return redirect()->back()->with('error', lang('Global.categoryDeleted'));
     }
 }

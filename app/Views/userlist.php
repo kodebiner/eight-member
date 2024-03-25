@@ -192,6 +192,18 @@
                         <label class="uk-form-label"><?=lang('Global.expiredate')?></label>
                         <div class="uk-form-controls uk-h3 uk-margin-remove"><span <?=$style?>><?=$expire?></span></div>
                     </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label"><?=lang('Global.memberCategory')?></label>
+                        <div class="uk-form-controls uk-h3 uk-margin-remove">
+                            <?php
+                            if ($user->category_id === '0') {
+                                echo 'Regular';
+                            } else {
+                                echo $category[$user->category_id];
+                            }
+                            ?>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <?php if (isset($user->photo)) { ?>
