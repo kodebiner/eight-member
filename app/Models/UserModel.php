@@ -20,13 +20,11 @@ class UserModel extends MythModel
         foreach ($groupsUsers as $groupUser) {
             $usersid[] = $groupUser->user_id;
         }
-        $pt = $this->db->table('users')->whereIn('id', $usersid)->get()->getResult();
-        
-        if (!empty($pt)) {
-            $pts = $pt;
+        if (!empty($userid)) {
+            $pt = $this->db->table('users')->whereIn('id', $usersid)->get()->getResult();
         } else {
-            $pts = [];
+            $pt = [];
         }
-        return $pts;
+        return $pt;
     }
 }
