@@ -21,6 +21,12 @@ class UserModel extends MythModel
             $usersid[] = $groupUser->user_id;
         }
         $pt = $this->db->table('users')->whereIn('id', $usersid)->get()->getResult();
-        return $pt;
+        
+        if (!empty($pt)) {
+            $pts = $pt;
+        } else {
+            $pts = [];
+        }
+        return $pts;
     }
 }
