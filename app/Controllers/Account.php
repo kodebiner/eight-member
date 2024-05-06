@@ -325,6 +325,7 @@ class Account extends BaseController
 
         // Populating Data
         $input = $this->request->getPost();
+        // dd($input);
         $user = $UserModel->where('memberid', $input['memberid'])->first();
         $UpdateUser = $UserModel->find($user->id);
         $group = $GroupUserModel->where('user_id', $user->id)->first();
@@ -386,8 +387,6 @@ class Account extends BaseController
             $compareUser['phone'] = $user->phone;
         }
 
-        $formDiff = array_diff($compareForm,$compareUser);
-
         if (!empty($input['photo'])) {
             $image_parts = explode(";base64,", $input['photo']);
             $image_type_aux = explode("image/", $image_parts[0]);
@@ -395,14 +394,22 @@ class Account extends BaseController
             $image_base64 = base64_decode($image_parts[1]);
             $fileName = $user->memberid.'-photo.jpg';
             $file = FCPATH.'/images/member/'.$fileName;
-            file_put_contents($file, $image_base64);
-
+            file_put_contents($file, $image_base64, LOCK_EX);
+            
             $UpdateUser->photo = $fileName;
+
+            if (empty($user->photo)) {
+                $UserModel->save($UpdateUser);
+            }
+        } else {
+            $formDiff = array_diff($compareForm,$compareUser);
+
+            if (!empty($formDiff)) {
+                $UserModel->save($UpdateUser);
+            }
         }
 
-        if (!empty($formDiff)) {
-            $UserModel->save($UpdateUser);
-        }
+        
         
         // Asign Member to New Group
         $authorize->removeUserFromGroup($user->id, $group['group_id']);
